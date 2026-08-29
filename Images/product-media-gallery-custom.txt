@@ -1,0 +1,335 @@
+{% style %}
+      .product-showcase{
+        width: 100%;
+      }
+
+      .product-showcase .swiper {
+        width: 100%;
+        height: 100%;
+      }
+
+      .product-showcase .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .big-frame{
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+      }
+       .big-frame img{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        object-fit: contain !important;
+      }
+   .sale-note-box{
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: #007766;
+      color: #fff;
+      top: 10px ;
+      left: 10px;
+      z-index: 2;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      font-family: "inter";
+      font-weight: 500;
+    }
+
+      .big-frame span{
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #fff;
+        top: 20px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000000;
+        z-index: 2;
+        box-shadow: -1px 1px 2px #6c6c6c;
+      }
+
+       .big-frame span svg{
+         width: 20px;
+         height: 20px;
+       }
+       .big-frame a:hover{
+         box-shadow: none;
+         border: 1px solid #6c6c6c;
+       }
+
+      .thumb-img-box{
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+      }
+
+      .thumb-img-box img{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        object-fit: contain !important;
+      }
+
+
+      .item-thumb-box .swiper {
+        width: 100%;
+        height: 300px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .product-showcase .swiper-slide {
+        background-position: center;
+      }
+
+      .item-showcase-box {
+        height: 80%;
+        width: 100%;
+      }
+
+      .item-thumb-box {
+        height: 20%;
+        box-sizing: border-box;
+        padding: 10px 0;
+        margin: 20px 0;
+      }
+
+      .item-thumb-box .swiper-slide {
+        width: 25%;
+        height: 100%;
+        opacity: 0.4;
+      }
+  .item-thumb-box{
+    position: relative;
+
+  }
+      .item-thumb-box .swiper-slide-thumb-active {
+        opacity: 1;
+      }
+
+      .product-showcase .swiper-slide img{
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .item-thumb-box .item-thumb-prev{
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+      }
+
+
+      .item-thumb-box .item-thumb-next{
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        z-index: 1;
+        cursor: pointer;
+      }
+
+
+   .item-thumb-box svg{
+     width: 50px ;
+     height: 50px;
+   }
+  .arrow-color{
+      fill: #007766;
+  }
+
+  .item-thumb-box .swiper-button-disabled{
+        display: none ;
+
+      }
+     .fancybox-container{
+       background: #fff;
+     }
+
+     .fancybox-button{
+       background: transparent;
+     }
+      .fancybox-button svg{
+       color: #007766;
+     }
+     .fancybox-button svg:hover{
+       color: #e56404;
+     }
+   .fancybox-thumbs__list a{
+     display: flex !important;
+   }
+     .fancybox-thumbs__list a:hover{
+    border: 2px solid #e56404 !important;
+   }
+     .fancybox-thumbs-active{
+       border: 2px solid #007766 !important;
+     }
+   .fancybox-button--arrow_right, .fancybox-button--arrow_left{
+       background: transparent !important;
+     }
+  @media screen and (max-width: 768px){
+      .item-thumb-box svg{
+     width: 30px ;
+     height: 30px;
+   }
+    .sale-note-box{
+        display: none;
+      }
+  }
+{% endstyle %}
+
+<div class="product-showcase">
+  <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper item-showcase-box">
+    <div class="swiper-wrapper">
+      {% if product.has_only_default_variant == false %}
+       <div class="swiper-slide" data-varid="{{ product.selected_or_first_available_variant.featured_media.id }}">
+          <div class="big-frame">
+            <a
+              data-fancybox="images"
+              title="{{ product.title }}n"
+              href="{{  product.selected_or_first_available_variant.featured_media.preview_image  | img_url: 'master'}}"
+              itemprop="contentUrl"
+              data-size="1200x600"
+            >
+              <img src="{{  product.selected_or_first_available_variant.featured_media.preview_image  | img_url: 'master'}} "  >
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+                    <path d="M15.8053 15.8013L21 21M10.5 7.5V13.5M7.5 10.5H13.5M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+                </svg>
+              </span>
+            </a>
+            {% if product.compare_at_price_min > product.price %}
+              <div class="sale-note-box">sale!</div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      {% for media in product.media %}
+        {% if media.id !=  product.selected_or_first_available_variant.featured_media.id %}
+        <div class="swiper-slide" data-varid="{{ media.id }}">
+          <div class="big-frame">
+            <a
+              data-fancybox="images"
+              title="{{ product.title }}n"
+              href="{{ media.preview_image  | img_url: 'master'}}"
+              itemprop="contentUrl"
+              data-size="1200x600"
+            >
+              <img src="{{ media.preview_image  | img_url: 'master'}} "  >
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+                    <path d="M15.8053 15.8013L21 21M10.5 7.5V13.5M7.5 10.5H13.5M18 10.5C18 14.6421 14.6421 18 10.5 18C6.35786 18 3 14.6421 3 10.5C3 6.35786 6.35786 3 10.5 3C14.6421 3 18 6.35786 18 10.5Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+                </svg>
+              </span>
+            </a>
+            {% if product.compare_at_price_min > product.price %}
+              <div class="sale-note-box">sale!</div>
+            {% endif %}
+          </div>
+        </div>
+          {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div thumbsSlider="" class="swiper item-thumb-box">
+    <div class="swiper-wrapper">
+     {% if product.has_only_default_variant == false %}
+        <div class="swiper-slide" data-varid="{{ product.selected_or_first_available_variant.featured_media.id }}">
+          <div class="thumb-img-box">
+            <img src="{{ product.selected_or_first_available_variant.featured_media.preview_image  | img_url: 'master'}} " alt="{{ variant.image.alt }}" >
+          </div>
+        </div>
+      {% endif %}
+     
+      {% for media in product.media %}
+        {% if media.id != product.selected_or_first_available_variant.featured_media.id %}
+        <div class="swiper-slide">
+          <div class="thumb-img-box">
+            <img src="{{media.preview_image  | img_url: 'master'}} " alt="{{ variant.image.alt }}" >
+          </div>
+        </div>
+          {% endif %}
+      {% endfor %}
+    </div>
+    <div class="item-thumb-next">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5303 18.5303C14.2374 18.8232 13.7626 18.8232 13.4697 18.5303L7.46967 12.5303C7.17678 12.2374 7.17678 11.7626 7.46967 11.4697L13.4697 5.46967C13.7626 5.17678 14.2374 5.17678 14.5303 5.46967C14.8232 5.76256 14.8232 6.23744 14.5303 6.53033L9.06066 12L14.5303 17.4697C14.8232 17.7626 14.8232 18.2374 14.5303 18.5303Z" class='arrow-color' ></path> </g>
+      </svg>
+    </div>
+    <div class="item-thumb-prev">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(1, 0, 0, 1, 0, 0)">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5303 18.5303C14.2374 18.8232 13.7626 18.8232 13.4697 18.5303L7.46967 12.5303C7.17678 12.2374 7.17678 11.7626 7.46967 11.4697L13.4697 5.46967C13.7626 5.17678 14.2374 5.17678 14.5303 5.46967C14.8232 5.76256 14.8232 6.23744 14.5303 6.53033L9.06066 12L14.5303 17.4697C14.8232 17.7626 14.8232 18.2374 14.5303 18.5303Z" class='arrow-color'></path> </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script>
+    $().fancybox({
+      fullscreen: {
+      autoStart: true,
+    },
+  });
+   
+
+  $("[data-fancybox]").fancybox({
+    beforeClose: function( instance, slide ) {
+      console.log(slide)
+     }
+  });
+
+  {% if product.has_only_default_variant == true %}
+    
+     var swiper = new Swiper(".item-thumb-box", {
+      spaceBetween: 10,
+      slidesPerView: 4,
+      freeMode: true,
+      watchSlidesProgress: true,
+        navigation: {
+        nextEl: ".item-thumb-next",
+        prevEl: ".item-thumb-prev",
+      },
+    });
+    
+    var swiper2 = new Swiper(".item-showcase-box", {
+      spaceBetween: 10,
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+    {% endif %}
+</script>

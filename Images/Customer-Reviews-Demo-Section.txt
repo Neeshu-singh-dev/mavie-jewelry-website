@@ -1,0 +1,1237 @@
+{% comment %} swiper slider{% endcomment %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+{% comment %} END swiper slider{% endcomment %}
+{% style %}
+    .custo-rev-main-container{
+      width: 100%;
+      padding: 40px 50px;
+      background: #fff;
+    }
+
+    .custo-rev-inner-container{
+      width: 100%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    .custo-rev-head-box{
+      width: 100%;
+      display:flex;
+     column-gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .custo-rev-prog-box{
+      width: calc(34.665% - 48px);
+    }
+
+    .custo-rev-prog-heading-box{
+      width: 100%;
+      display: flex;
+      column-gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .custo-rev-total-rate{
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .custo-rev-total-rate span{
+      font-family: 'montserrat';
+      font-size: 20px;
+      font-weight: 600;
+      color:#2C3E50;
+      margin-right: 6px;
+      line-height: 1.6;
+    }
+
+    .curto-rec-sta-bx{
+      padding: 5px 0;
+      width: fit-content;
+      height: inherit;
+      display: flex;
+      align-items: center;
+    }
+
+    .curto-rec-sta-bx svg{
+      width: 22.35px;
+      height: auto;
+      margin-right: -1.7px;
+    }
+
+    .custo-rev-prog-head-text{
+      font-size: 12px;
+      font-family: 'montserrat';
+      font-weight: 400;
+      color: #676986;
+      line-height: 1.6;
+    }
+    .custo-rev-prog-bar-box{
+      width: 100%;
+      max-width: 350px;
+      display: grid;
+      grid-template-columns:  min-content 1fr min-content ;
+      align-items: center;
+      column-gap: 12px;
+      row-gap:10px;
+    }
+
+    .custo-rev-star-count{
+      display: flex;
+      align-items: center;
+      width: 25.05px;
+      height: min-content;
+      justify-content: space-between;
+    }
+
+    .custo-rev-star-count span{
+      font-size: 12px;
+      font-family: 'montserrat';
+      font-weight: 400;
+      color: #2c3e50;
+      /* margin-right: 4px; */
+      line-height: 1;
+    }
+
+    .custo-rev-star-count svg{
+      width: 15px;
+      height: 14px;
+    }
+    .custo-rev-prog{
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #f4f4f6;
+      position: relative;
+    }
+
+    .custo-rev-prog-1,
+    .custo-rev-prog-2,
+    .custo-rev-prog-3,
+    .custo-rev-prog-4,
+    .custo-rev-prog-5{
+      width: 6px;
+      height: 6px;
+      top: 0;
+      left: 0;
+      border-radius: 3px;
+      position: absolute;
+      z-index: 1;
+      background: #9a9db1;
+    }
+
+    .custo-rev-prog-5{
+      width: 81%;
+    }
+
+    .custo-rev-prog-4{
+      width: 17%;
+    }
+
+    .custo-rev-total-count{
+      font-size: 12px;
+      font-family: "montserrat";
+      font-weight: 400;
+      color: #676986;
+      text-align: right;
+      line-height: 1;
+    }
+
+    .custo-rev-meida-slider-box{
+      width: 65.334%;
+      max-width: 784px;
+    }
+
+    .custo-rev-media-heading{
+      width: 100%;
+      font-size: 14px;
+      font-family: "montserrat";
+      font-weight: 400;
+      color: #676986;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .custo-rev-media-heading span{
+      font-size: 20px;
+      color: #2C3E50;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+
+    .custo-rev-slider{
+      width: 100%;
+      position: relative;
+    }
+  .custo-rev-slider .swiper-slide{
+    width: 120px !important;
+  }
+    .custo-rev-slider-img-box{
+      width: 100%;
+      padding-top: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .custo-rev-slider-img{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      transform: scale(1);
+      transition: all .3s ease-in-out;
+      object-fit: cover;
+    }
+
+    .custo-rev-slider-img:hover{
+      transform: scale(1.1);
+    }
+
+    .custo-rev-slide-button-next{
+      position: absolute;
+      width: fit-content;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      padding: 0 10px;
+      background: #ffffffcc;
+      cursor: pointer;
+    }
+
+    .custo-rev-slide-button-prev{
+      position: absolute;
+      width: fit-content;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      padding: 0 10px;
+      background: #ffffffcc;
+      cursor: pointer;
+    }
+
+    .custo-rev-slide-button-next.swiper-button-disabled,
+    .custo-rev-slide-button-prev.swiper-button-disabled{
+      opacity: 0;
+    }
+
+    .custo-rev-slide-button-next svg,
+    .custo-rev-slide-button-prev svg{
+      width: 15px ;
+      height: 15px;
+    }
+
+    .custo-rev-filter-count-box{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 21px 0 0px 0;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #E5E5EB;
+    }
+
+    .custo-rev-count-box{
+      font-size: 14px;
+      font-family: "montserrat";
+      font-weight: 400;
+      color: #676986;
+      line-height: 1.6;
+    }
+
+    .custo-rev-filter-box span{
+      font-size: 14px;
+      font-family: "montserrat";
+      font-weight: 600;
+      color: #2C3E50;
+      line-height: 1.6;
+      margin-right: 14px;
+    }
+
+    .custo-rev-filter-box select{
+      width: fit-content;
+      padding: 0 22px 0 12px ;
+      border:  none;
+      outline: none;
+      font-size: 14px;
+      font-weight: 300;
+      font-family: "montserrat";
+      background-image: url( https://cdn.shopify.com/s/files/1/0789/6950/4027/files/download.svg?v=1722244444);
+      background-position-x: 101.5%;
+      background-repeat: no-repeat;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      border: 2px solid transparent;
+      letter-spacing: 0.1px;
+    }
+
+    .custo-rev-filter-box select:focus{
+      border: 2px solid #0c2331;
+      border-radius: 4px;
+      box-shadow: none;
+    }
+
+    {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'reivews' %}
+
+    .reviews--{{ block.id }}{
+      width: 100%;
+      display: flex;
+      padding: 24px 0;
+      border-bottom: 1px solid #E5E5EB;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-box-a{
+      width: 300px;
+      border-right: 1px solid #E5E5EB;
+      margin-right: 24px;
+      padding-right: 24px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-head{
+      width: 100%;
+      display: flex;
+      column-gap: 16px;
+      align-items: center;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-img-box{
+      width: 48px;
+      height: 48px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-img-box img{
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-ver-nam{
+    width: calc(100% - 64px);
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-nam{
+      font-size: 12px;
+      font-family: "montserrat";
+      font-weight: 700;
+      color: #2c3e50;
+      line-height: 1.6;
+      margin-bottom: 1px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-ver{
+      font-size: 12px;
+      font-family: "montserrat";
+      font-weight: 600;
+      color: #B8DCE0;
+      line-height: 1.6;
+      display:flex;
+      align-items: center;
+    }
+
+    .reviews--{{ block.id }}  .custo-rev-a-ver span{
+      display:inline-flex;
+      align-items: center;
+      margin-left: 2px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-ver svg{
+      width: 15px;
+      height: 15px;
+      margin-left: 3px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-for{
+      width: 100%;
+      display: flex;
+      column-gap: 16px;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-for-img-box{
+      display: {{block.settings.hide-img}};
+      width: 48px;
+      height: 48px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-for-img-box img{
+      width: 48px;
+      height: 48px;
+      border: 1px solid #e5e5eb;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-for-text-box{
+      width: calc(100% - 64px);
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-for-tilte{
+      font-size: 12px;
+      font-family: "montserrat";
+      font-weight: 600;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-for-sub-tilte{
+      font-size: 12px;
+      font-family: "montserrat";
+      font-weight: 400;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-recomend-box{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      font-family: "montserrat";
+      font-weight: 400;
+      color: #2c3e50;
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-recomend-box span{
+      width: 16px;
+      height: 16px;
+      background: #B8DCE0;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 4px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-a-recomend-box span svg{
+      width: 10px;
+      height: 10px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-ques-ans-box{
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-ques-ans-inner-box{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+      .reviews--{{ block.id }} .custo-rev-ques-ans-inner-box:last-child{
+        margin-bottom: 0px;
+      }
+
+    .reviews--{{ block.id }} .custo-rev-ques{
+      font-size: 12px;
+      font-family: "montserrat";
+      font-weight: 600;
+      color: #2c3e50;
+      line-height:  1.6;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-ans{
+      font-size: 12px;
+      font-family: "montserrat";
+      font-weight: 400;
+      color: #2c3e50;
+      line-height:  1.6;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-box-b{
+      width: calc(100% - 324px) ;
+      display: grid;
+      grid-template-columns: 1fr 248px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-review-box{
+      width: 100%;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-rating-box{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-star-box{
+      width: fit-content;
+      display: flex;
+      align-items: center;
+    }
+    .reviews--{{ block.id }} .custo-rev-b-star-box svg{
+  width: 22.5px;
+      height: 22.4px;
+      margin-left: -2px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-oldest{
+      font-family: "montserrat";
+      font-size: 12px;
+      font-weight: 400;
+      color: #676986;
+      line-height: 1.6;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-heading{
+      width: 100%;
+      font-size: 14px;
+      font-family: "montserrat";
+      font-weight: 600;
+      color: #2C3E50;
+      line-height: 1.6;
+      margin-top: 10px;
+      text-transform: capitalize;
+    }
+
+    .reviews--{{ block.id }}  .custo-rev-b-para{
+      display: -webkit-box;
+      width: 100%;
+      font-size: 14px;
+      font-family: "montserrat";
+      font-weight: 400;
+      color: #2C3E50;
+      line-height: 1.8;
+      margin-top: 8px;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: clip;       
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-more{
+      width: 100%;
+      font-size: 14px;
+      font-family: "montserrat";
+      font-weight: 400;
+      color: #2C3E50;
+      line-height: 1.8;
+      text-decoration: underline;
+      letter-spacing: 0px;
+    }
+
+    .reviews--{{ block.id }}  .custo-rev-b-footer-box{
+      width: 100%;
+      font-size: 12px;
+      font-family: "montserrat";
+      font-weight: 400;
+      color: #676986;
+      line-height: 1.4;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-footer-box span{
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 12px;
+      margin-right: 2px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-footer-box svg{
+      width: 12px;
+      height: 12px;
+      margin-right: 1px;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-img-box{
+      padding-left: 48px;
+      grid-column: 2 / span end;
+    grid-row: 1 / 5;
+    }
+
+    .reviews--{{ block.id }}  .custo-rev-b-img-inner-box{
+      width: 100%;
+      padding-top: 133%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-img-inner-box img{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      object-fit: cover;
+      transform: scale(1);
+      transition: all .3s ease-in-out;
+    }
+
+    .reviews--{{ block.id }} .custo-rev-b-img-inner-box img:hover{
+      transform: scale(1.1);
+    }
+
+    {% endcase %}
+    {% endfor %}
+
+    .custo-rev-show-more-box{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .custo-rev-show-more-box button{
+      border: 1px solid #DBDDE4;
+      border-radius: 4px;
+      line-height: 1;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-family: "montserrat";
+      font-weight: 700;
+      color: #272D45;
+      cursor: pointer;
+      background: #f7f7f8;
+    }
+
+    .custo-rev-show-more-box button:hover{
+      box-shadow: 0 0 0 2px #f4f4f6;
+    }
+
+    .custo-rev-show-more-box button:active{
+      color: #fff;
+      background: #676986;
+      border: 1px solid #676986;
+    }
+
+    @media screen and (max-width: 1060px){
+      
+      .custo-rev-head-box{
+        justify-content: center;
+      }
+      .custo-rev-prog-box{
+        width: 350px;
+      }
+      .custo-rev-meida-slider-box{
+        width: 100%;
+        max-width: 100%;
+        margin-top: 24px;
+      }
+
+    {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'reivews' %}
+       .reviews--{{ block.id }}{
+        padding: 16px 0; 
+       }
+         .reviews--{{ block.id }} .custo-rev-a-nam{
+           margin-bottom: 0px;
+         }
+    .reviews--{{ block.id }} .custo-rev-box-b{
+      display: block;
+     }
+    .reviews--{{ block.id }} .custo-rev-b-img-box{
+      width: 150px;
+      padding : 0;
+      margin-top: 32px;
+      }
+
+      .reviews--{{ block.id }} .custo-rev-b-img-inner-box img{
+        object-fit: contain;
+        object-position: left;
+      }
+
+     .reviews--{{ block.id }} .custo-rev-b-footer-box {
+      margin-top: 24px;  
+      }
+      
+     
+    {% endcase %}
+    {% endfor %}
+    }
+
+   @media screen and (max-width: 1023px){
+     
+         {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'reivews' %}
+   .reviews--{{ block.id }} .custo-rev-a-head{
+      column-gap: 8px;
+    }
+       {% endcase %}
+    {% endfor %}
+  }
+
+    @media screen and (max-width: 749px){
+      .custo-rev-main-container{
+        padding: 30px 15px;
+      }
+    }
+      @media screen and (max-width: 675px){
+        .custo-rev-prog-heading-box{
+        justify-content: center;
+      }
+
+        .custo-rev-media-heading{
+          text-align: center;
+        }
+        .custo-rev-media-heading span{
+          display: block;
+        }
+
+         {% for block in section.blocks %}
+    {% case block.type %}
+    {% when 'reivews' %}
+     .reviews--{{ block.id }}{
+       flex-wrap: wrap;
+    }
+      .reviews--{{ block.id }} .custo-rev-box-a{
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #e5e5eb;
+        padding: 0;
+        margin: 0;
+        padding-bottom: 12px ;
+        margin-bottom: 16px;
+      }
+
+  .reviews--{{ block.id }} .custo-rev-box-b{
+    width: 100%;
+    padding: 0 8px;
+  }
+        {% endcase %}
+    {% endfor %}
+      }
+
+    .custo-rev-prog div:empty{
+    display: block;
+    }
+
+  
+{% endstyle %}
+
+<div class="custo-rev-main-container">
+  <div class="custo-rev-inner-container">
+    <div class="custo-rev-head-box">
+      <div class="custo-rev-prog-box">
+        <div class="custo-rev-prog-heading-box">
+          <div class="custo-rev-total-rate">
+            <span>4.8</span>
+            <div class="curto-rec-sta-bx">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+              </svg>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+              </svg>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+              </svg>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+              </svg>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+              </svg>
+            </div>
+          </div>
+          <div class="custo-rev-prog-head-text">Based on 2,588 reviews</div>
+        </div>
+
+        <div class="custo-rev-prog-bar-box">
+          <div class="custo-rev-star-count">
+            <span>5</span>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+            </svg>
+          </div>
+          <div class="custo-rev-prog">
+            <div class="custo-rev-prog-5"></div>
+          </div>
+
+          <div class="custo-rev-total-count">2.1k</div>
+
+          <div class="custo-rev-star-count">
+            <span>4</span>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+            </svg>
+          </div>
+          <div class="custo-rev-prog">
+            <div class="custo-rev-prog-4"></div>
+          </div>
+
+          <div class="custo-rev-total-count">446</div>
+
+          <div class="custo-rev-star-count">
+            <span>3</span>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+            </svg>
+          </div>
+          <div class="custo-rev-prog">
+            <div class="custo-rev-prog-3"></div>
+          </div>
+
+          <div class="custo-rev-total-count">17</div>
+
+          <div class="custo-rev-star-count">
+            <span>2</span>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+            </svg>
+          </div>
+          <div class="custo-rev-prog">
+            <div class="custo-rev-prog-2"></div>
+          </div>
+
+          <div class="custo-rev-total-count">7</div>
+
+          <div class="custo-rev-star-count">
+            <span>1</span>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+            </svg>
+          </div>
+          <div class="custo-rev-prog">
+            <div class="custo-rev-prog-1"></div>
+          </div>
+
+          <div class="custo-rev-total-count">13</div>
+        </div>
+      </div>
+      <div class="custo-rev-meida-slider-box">
+        <div class="custo-rev-media-heading">
+          <span>99%</span>
+          would recommend these products
+        </div>
+        <div class="swiper custo-rev-slider">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when 'slides' %}
+                  <div class="swiper-slide">
+                    <div class="custo-rev-slider-img-box">
+                      <img src="{{ block.settings.image | img_url: 'master' }}" class="custo-rev-slider-img">
+                    </div>
+                  </div>
+              {% endcase %}
+            {% endfor %}
+          </div>
+          <div class="custo-rev-slide-button-next">
+            <svg
+              viewBox="0 0 1024.00 1024.00"
+              class="icon"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="#000000"
+              stroke="#000000"
+              stroke-width="25.6"
+              transform="matrix(-1, 0, 0, 1, 0, 0)"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="#000000"></path></g>
+            </svg>
+          </div>
+          <div class="custo-rev-slide-button-prev">
+            <svg
+              viewBox="0 0 1024.00 1024.00"
+              class="icon"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="#000000"
+              stroke="#000000"
+              stroke-width="25.6"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="#000000"></path></g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="custo-rev-filter-count-box">
+      <div class="custo-rev-count-box">2,588 reviews</div>
+      <div class="custo-rev-filter-box">
+        <span>Sort</span>
+        <select>
+          <option>Most Recent</option>
+          <option>Oldest</option>
+          <option>Most Helpful</option>
+          <option selected>Photos & Videos</option>
+          <option>Highest Rating</option>
+          <option>Lowest Rating</option>
+          <option>Least Helpful</option>
+        </select>
+      </div>
+    </div>
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'reivews' %}
+          <div class="custo-rev-box reviews--{{ block.id }}">
+            <div class="custo-rev-box-a">
+              <div class="custo-rev-a-head">
+                <div class="custo-rev-a-img-box">
+                  <img src="{{ block.settings.img | img_url: 'mater'}}">
+                </div>
+                <div class="custo-rev-a-ver-nam">
+                  <div class="custo-rev-a-nam">{{ block.settings['custo-name'] }}</div>
+                  {% if forloop.index == 10 %}
+                    <div class="custo-rev-a-ver">
+                      Verified Reviewer
+                      <span>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L12.7348 11.2045L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="#b8dce0"></path> </g>
+                        </svg>
+                      </span>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="custo-rev-a-for">
+                <div class=" custo-rev-a-for-img-box">
+                  <img src="{{ block.settings.imgif | img_url: 'master'}}">
+                </div>
+                <div class="custo-rev-a-for-text-box">
+                  <div class="custo-rev-a-for-tilte">Reviewing</div>
+                  <div class="custo-rev-a-for-sub-tilte">{{ block.settings.text }}</div>
+                </div>
+              </div>
+              <div class="custo-rev-a-recomend-box">
+                <span>
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#fff">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path fill="none" d="M0 0h24v24H0z"></path> <path d="M2 9h3v12H2a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1zm5.293-1.293l6.4-6.4a.5.5 0 0 1 .654-.047l.853.64a1.5 1.5 0 0 1 .553 1.57L14.6 8H21a2 2 0 0 1 2 2v2.104a2 2 0 0 1-.15.762l-3.095 7.515a1 1 0 0 1-.925.619H8a1 1 0 0 1-1-1V8.414a1 1 0 0 1 .293-.707z"></path> </g> </g>
+                  </svg>
+                </span>
+                I recommend this product
+              </div>
+
+              {% if forloop.index >= 11 %}
+                <div class="custo-rev-ques-ans-box">
+                  <div class="custo-rev-ques-ans-inner-box">
+                    <div class="custo-rev-ques">What's your favorite aspect of our shower bombs?</div>
+                    <div class="custo-rev-ans">
+                      {{ block.settings['ans-1'] }}
+                    </div>
+                  </div>
+                  {% if forloop.index >= 12 %}
+                    <div class="custo-rev-ques-ans-inner-box">
+                      <div class="custo-rev-ques">How often do you use a shower bomb?</div>
+                      <div class="custo-rev-ans">
+                        {{ block.settings['ans-2'] }}
+                      </div>
+                    </div>
+                  {% endif %}
+                  <div class="custo-rev-ques-ans-inner-box">
+                    <div class="custo-rev-ques">Scent Strength? (Optional)</div>
+                    <div class="custo-rev-ans">
+                      {{ block.settings['ans-3'] }}
+                    </div>
+                  </div>
+
+                  <div class="custo-rev-ques-ans-inner-box">
+                    <div class="custo-rev-ques">How long did the tablet last in the shower? (Optional)</div>
+                    <div class="custo-rev-ans">
+                      {{ block.settings['ans-4'] }}
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+            <div class="custo-rev-box-b">
+              <div class="custo-rev-b-review-box">
+                <div class="custo-rev-b-rating-box">
+                  <div class="custo-rev-b-star-box">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="m12 17.328-5.403 3.286a.75.75 0 0 1-1.12-.813l1.456-6.155-4.796-4.123a.75.75 0 0 1 .428-1.316l6.303-.517 2.44-5.835a.75.75 0 0 1 1.384 0l2.44 5.835 6.303.517a.75.75 0 0 1 .427 1.316l-4.795 4.123 1.456 6.155a.75.75 0 0 1-1.12.813L12 17.328z" fill="#ffcf2a"></path></g>
+                    </svg>
+                  </div>
+                  <div class="custo-rev-b-oldest">{{ block.settings.publish }}</div>
+                </div>
+                <div class="custo-rev-b-main-box">
+                  <div class="custo-rev-b-heading">{{ block.settings['head-text'] }}</div>
+                  <div class="custo-rev-b-para">
+                    {{ block.settings.para }}
+                  </div>
+                  {% if forloop.index <= 11 %}
+                    <div class="custo-rev-b-more">Read More</div>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="custo-rev-b-img-box">
+                <div class="custo-rev-b-img-inner-box">
+                  <img src="{{ block.settings.rev-product-img | img_url: 'master'}}">
+                </div>
+              </div>
+              <div class="custo-rev-b-footer-box">
+                Was this helpful?
+                <span>
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#b3b4c2">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path fill="none" d="M0 0h24v24H0z"></path> <path d="M2 9h3v12H2a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1zm5.293-1.293l6.4-6.4a.5.5 0 0 1 .654-.047l.853.64a1.5 1.5 0 0 1 .553 1.57L14.6 8H21a2 2 0 0 1 2 2v2.104a2 2 0 0 1-.15.762l-3.095 7.515a1 1 0 0 1-.925.619H8a1 1 0 0 1-1-1V8.414a1 1 0 0 1 .293-.707z"></path> </g> </g>
+                  </svg>
+                </span>
+                {{ block.settings['like-count'] }}
+                <span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="#b3b4c2"
+                    transform="matrix(-1, 0, 0, -1, 0, 0)"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path fill="none" d="M0 0h24v24H0z"></path> <path d="M2 9h3v12H2a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1zm5.293-1.293l6.4-6.4a.5.5 0 0 1 .654-.047l.853.64a1.5 1.5 0 0 1 .553 1.57L14.6 8H21a2 2 0 0 1 2 2v2.104a2 2 0 0 1-.15.762l-3.095 7.515a1 1 0 0 1-.925.619H8a1 1 0 0 1-1-1V8.414a1 1 0 0 1 .293-.707z"></path> </g> </g>
+                  </svg>
+                </span>
+                0
+              </div>
+            </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+    <div class="custo-rev-show-more-box">
+      <button>Show More</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var swiper = new Swiper(".custo-rev-slider", {
+       slidesPerView: 6.2,
+    spaceBetween: 5,
+    navigation: {
+      nextEl: ".custo-rev-slide-button-next",
+      prevEl: ".custo-rev-slide-button-prev",
+    },
+     breakpoints: {
+    320: {
+      slidesPerView: 2.1,
+      spaceBetween: 4,
+    },
+    375: {
+      slidesPerView: 2.5,
+      spaceBetween: 4,
+    },
+    400: {
+      slidesPerView: 3,
+      spaceBetween: 4,
+    },
+    425: {
+      slidesPerView: 3.5,
+      spaceBetween: 4,
+    },
+      450: {
+      slidesPerView: 4,
+      spaceBetween: 4,
+    },
+    475: {
+      slidesPerView: 4.5,
+      spaceBetween: 5,
+    },
+    500: {
+      slidesPerView: 5,
+      spaceBetween: 4,
+    },
+    525: {
+      slidesPerView: 5.2,
+      spaceBetween: 4,
+    },
+    550: {
+      slidesPerView: 5.5,
+      spaceBetween: 4,
+    },
+    575: {
+      slidesPerView: 5.7,
+      spaceBetween: 4,
+    },
+    600: {
+      slidesPerView: 6,
+      spaceBetween: 4,
+    },
+    650: {
+      slidesPerView: 6.5,
+      spaceBetween: 4,
+    },
+  }
+  });
+</script>
+
+<script>
+    $(document).ready(function(){
+
+  if ($(window).width() > 769) {
+    $('.custo-rev-slide-button-next').fadeOut();
+    $('.custo-rev-slide-button-prev').fadeOut();
+
+    $('.custo-rev-slider').mouseenter(function(){
+      $('.custo-rev-slide-button-next').fadeIn();
+      $('.custo-rev-slide-button-prev').fadeIn();
+    })
+
+    $('.custo-rev-slider').mouseleave(function(){
+      $('.custo-rev-slide-button-next').fadeOut();
+      $('.custo-rev-slide-button-prev').fadeOut();
+    })
+  }
+
+
+      $('.custo-rev-b-more').click(function(){
+        $(this).hide();
+        $(this).parents('.custo-rev-box').find(".custo-rev-b-para").css("display", "block")
+      })
+
+    })
+</script>
+
+{% schema %}
+{
+  "name": " Custo Reviews",
+  "settings": [
+
+  ],
+  "blocks": [
+    {
+      "type": "slides",
+      "name": "Slides",
+      "settings":[
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Select Image"
+        }
+      ]
+    },
+    {
+      "type": "reivews",
+      "name": "Reviews",
+      "settings": [
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "image 1"
+          },
+          {
+            "type": "textarea",
+            "id": "custo-name",
+            "default":"Kristine N.",
+            "label": "Customer Name"
+          },
+          {
+            "type": "image_picker",
+            "id": "imgif",
+            "label": "image 2"
+          },
+          {
+            "type": "select",
+            "id": "hide-img",
+            "options": [
+              {
+                "value": "none",
+                "label": "Hide IMG"
+              },
+              {
+                "value": "inline",
+                "label": "Show IMG"
+              }
+            ],
+            "default": "inline",
+            "label": "Hide and show Above IMG"
+          },
+          {
+            "type": "textarea",
+            "id": "text",
+            "default":"BodyRestore",
+            "label": "Tag Line"
+          },
+          {
+            "type": "textarea",
+            "id": "ans-1",
+            "default": "Great aroma",
+            "label": "Answare of Question 1"
+          },
+          {
+            "type": "textarea",
+            "id": "ans-2",
+            "default": "Weekly",
+            "label": "Answare of Question 2"
+          },
+          {
+            "type": "textarea",
+            "id": "ans-3",
+            "default": "Just Right",
+            "label": "Answare of Question 3"
+          },
+          {
+            "type": "textarea",
+            "id": "ans-4",
+            "default": "Too Long, Perfect",
+            "label": "Answare of Question 4"
+          },
+          {
+            "type": "textarea",
+            "id": "publish",
+            "default":"6 months ago",
+            "label": "When Customer Reviewed"
+          },
+          {
+            "type": "textarea",
+            "id": "head-text",
+            "default":"Relief",
+            "label": "Review Title"
+          },
+          {
+            "type": "textarea",
+            "id": "para",
+            "default":"I bought the relief shower steamers after hearing about them from an Instagram influencer. I was a little skeptical but decided to give them a try. They smell amazing and help tremendously with sinus headaches and congestion. They have just the right amount of eucalyptus with out being overwhelming. I highly",
+            "label": "Review"
+          },
+          {
+           "type":"number",
+            "id": "like-count",
+            "default": 1,
+            "label": "Like Counts"
+          },
+          {
+            "type": "image_picker",
+            "id": "rev-product-img",
+            "label": "image 3"
+          }
+      ]
+    }
+  ],
+  "presets": [
+    {
+       "name": " Custo Reviews"
+    }
+  ]
+}
+{% endschema %}

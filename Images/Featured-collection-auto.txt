@@ -1,0 +1,1597 @@
+{% style %}
+   .main-test-coll{
+     width: 100%;
+     padding: 60px 40px;
+   }
+  .main-test-inner-coll{
+    width: 100%; 
+  }
+ {% for heading in section.blocks %}
+    {% case heading.type %}
+      {% when 'head-ing' %}        
+     .heading-of-product-box {
+       width: 100%;
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       margin-bottom: {{heading.settings.heading-bottom-margin}}px;
+     }
+
+     .product-heading-text {
+       font-size: {{heading.settings.title-font-size}}px;
+       font-family:  {{heading.settings.title-font-family}};
+       font-weight:  {{heading.settings.title-font-weight}};
+       text-transform:  {{heading.settings.title-text-transform}};
+       display: flex;
+       align-items: center;
+       color: {{heading.settings.title-font-color}};
+     }
+
+     .product-heading-text a {
+       font-weight: {{heading.settings.link-font-weight}};
+       font-size:  {{heading.settings.link-font-size}}px;
+       text-decoration: none;
+       text-decoration: underline;
+       text-underline-offset: 5px;
+       text-decoration-thickness: 2px;
+       color: {{heading.settings.link-font-color}};
+     }
+
+     {% endcase %}
+     {% endfor %}
+
+
+     .inner-test-coll{
+       width: 100%;
+       display: flex;
+       flex-wrap: wrap;
+       gap: 20px;
+
+     }
+     .product-card-container{
+       width: calc(25% - 20px*3/4);
+       background: {{section.settings.product-box-bacground}};
+       border-radius: {{section.settings.product-box-border-radius}}px;
+       overflow: hidden;
+     }
+
+  .product-img-box{
+           width: 100%;
+           overflow: hidden;
+           position: relative;
+         }
+
+         .sale{
+           position: absolute;
+           top: {{section.settings.top-position}}%;
+           right: {{section.settings.right-position}}%;
+           padding: {{section.settings.sale-top-bottom-padding}}px {{ section.settings.sale-left-right-padding }}px;
+           font-size: {{section.settings.sale-font-size}}px;
+           text-transform: {{section.settings.sale-text-transform}};
+           color: {{section.settings.sale-font-color}};
+           font-family: {{section.settings.sale-font-family}};
+           font-weight: {{section.settings.sale-font-weight}};
+           background-color: {{section.settings.sale-background-color}};
+           border-radius: {{section.settings.sale-box-radius}}%;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+         }
+
+         .product-button-box{
+           width: 100%;
+           position: absolute;
+           bottom: -50px;
+           left: 0;
+           transition: 0.2s ease-in-out;
+         }
+
+         .up-button{
+           bottom: 20px;
+         }
+
+         .add-cart-button{
+           height:  {{section.settings.cart-btn-height}}px;
+           width:  {{section.settings.cart-btn-width}}%;
+           border-radius:  {{section.settings.cart-btn-radius}}px;
+           font-size:  {{section.settings.cart-btn-font-size}}px;
+           text-transform:  {{section.settings.cart-btn-text-transform}};
+           color:  {{section.settings.cart-btn-font-color}};
+           font-family:  {{section.settings.cart-btn-fant-family}};
+           background-color:  {{section.settings.cart-btn-background-color}};
+           border: {{section.settings.border-thickness}}px {{section.settings.border}} {{section.settings.border-color}};
+           margin: auto;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           cursor: pointer;
+         }
+
+          .add-cart-button:hover{
+           background-color: {{section.settings.cart-btn-background-color-hover}};
+           color: {{section.settings.cart-btn-font-color-hover}};
+           border: {{section.settings.border-thickness-hover}}px {{section.settings.border-hover}} {{section.settings.border-color-hover}};
+         }
+
+         .product-img-inner-box{
+           width: 100%;
+           padding-top: {{section.settings.product-img-height}}%;
+           position: relative;
+         }
+
+         .product-img-1{
+           width: 100%;
+           height: 100%;
+           position: absolute;
+           left: 0;
+           right: 0;
+           top: 0;
+           bottom: 0;
+           object-fit: cover;
+            transform: scale(1);
+           transition: 0.3s;
+         }
+     .product-img-1:hover{
+           transform: scale(1.1);
+
+     }
+
+         .product-img-2{
+           display: none;
+           width: 100%;
+           height: 100%;
+           position: absolute;
+           left: 0;
+           right: 0;
+           top: 0;
+           bottom: 0;
+           object-fit: cover;
+           transform: scale(1);
+           transition: 0.3s;
+         }
+
+         .product-img-2:hover{
+           transform: scale(1.1);
+         }
+
+         .product-info-box{
+           width: 100%;
+           text-align: {{section.settings.product-info-align}};
+           padding: 10px 10px 20px 10px;
+         }
+
+         .product-collection-name{
+           width: 100%;
+           font-size:  {{section.settings.product-collection-name-font-size}}px;
+           font-family:  {{section.settings.product-collection-name-font-family}};
+           font-weight: {{section.settings.product-collection-name-font-weight}};
+           text-transform:  {{section.settings.product-collection-name-text-transform}};
+         }
+
+
+         .product-collection-name a{
+           width: 100%;
+           color:  {{section.settings.product-collection-name-font-color}};
+           text-decoration: none;
+         }
+
+         .product-collection-name a:hover{
+           color: {{section.settings.product-collection-name-font-color-hover}};
+         }
+
+         .product-name{
+           margin-top: {{section.settings.product-name-top-margin}}px;
+           margin-bottom:  {{section.settings.product-name-bottom-margin}}px;
+           width: 100%;
+           font-size:  {{section.settings.product-name-font-size}}px;
+           font-family:  {{section.settings.product-name-font-family}};
+           font-weight:  {{section.settings.product-name-font-weight}};
+           text-transform: {{section.settings.product-name-text-transform}};
+           line-height: {{section.settings.product-name-line-height}};
+         }
+
+         .product-name a{
+           width: 100%;
+           color: {{section.settings.product-name-font-color}};
+           line-height: {{section.settings.product-name-line-height}};
+           text-decoration: none;
+         }
+
+           .product-name a:hover{
+           text-decoration: {{section.settings.product-name-decoration-hover}};
+           color:  {{section.settings.product-name-font-color-hover}};
+         }
+
+         .product-rating-star-box{
+           margin-bottom:  {{section.settings.star-box-margin-bottom}}px;
+           display: flex;
+           justify-content: {{section.settings.star-align}};
+           gap: {{section.settings.star-gap}}px;
+           align-items: center;
+         }
+
+         .stars-size{
+           width: 16px;
+           height: 16px;
+         }
+
+         .product-price {
+           font-size:  {{section.settings.product-price-font-size}}px;
+           font-family:  {{section.settings.product-price-font-family}};
+           font-weight:  {{section.settings.product-price-font-weight}};
+           color: {{section.settings.product-price-font-color}};
+           text-transform: {{section.settings.product-price-text-transform}};
+         }
+
+         .product-price span{
+           text-decoration: line-through;
+           font-size: {{section.settings.product-strike-price-font-size}}px;
+           font-family: {{section.settings.product-strike-price-font-family}};
+           font-weight: {{section.settings.product-strike-price-font-weight}};
+           color: {{section.settings.product-strike-price-font-color}};
+         }
+
+
+  @media screen and (min-width: 1441px){
+.main-test-inner-coll{
+  width: 1340px;
+  margin: auto;
+}
+  }
+
+
+         @media screen  and (min-width: 1024px) and (max-width: 1279px){
+
+           .sale{
+             font-size: 10px;
+           }
+
+           .add-cart-button{
+             height: 35px;
+           }
+
+           .product-name{
+             font-size: 14px;
+           }
+
+            .product-rating-star-box{
+             margin-bottom: 12px;
+           }
+
+           .product-price{
+             font-size: 14px;
+           }
+
+            .product-price span{
+             font-size: 14px;
+           }
+         }
+
+       @media screen  and (min-width: 769px) and (max-width: 1023px){
+          {% for heading in section.blocks %}
+    {% case heading.type %}
+      {% when 'head-ing' %}  
+
+           .product-heading-text{
+         font-size: 24px;
+       }
+
+       .product-heading-text a{
+         font-size: 12px;
+       }
+      {% endcase %}
+         {% endfor %}
+          .inner-test-coll{
+            gap: 15px;
+          }
+
+          .product-card-container{
+           width:  calc(25% - 15px*3/4);
+         }
+
+         .sale{
+           font-size: 9px;
+         }
+
+          .add-cart-button{
+           height: 35px;
+         }
+
+         .up-button{
+           bottom: 10px;
+         }
+
+          .product-collection-name {
+           font-size: 10px;
+         }
+
+         .product-name {
+           font-size: 12px;
+         }
+
+         .product-rating-star-box{
+           margin-bottom: 8px;
+         }
+
+
+         .stars-size{
+           width: 15px;
+           height: 15px;
+         }
+
+          .product-price{
+           font-size: 12px;
+         }
+
+         .product-price span{
+           font-size: 12px;
+         }
+
+       }
+
+       @media screen and (max-width: 768px) {
+         
+          .main-test-coll{
+            padding: 40px 20px ;
+          }
+
+    
+          .product-heading-text{
+         font-size: 24px;
+       }
+
+       .product-heading-text a{
+         font-size: 14px;
+       }
+
+   
+         
+          .inner-test-coll{
+            gap: 15px;
+          }
+
+
+       .product-card-container{
+         width:  calc(50% - 15px* 1/2);
+       }
+
+       .sale{
+         padding: 8px 4px;
+         font-size: 8px;
+       }
+
+       .up-button{
+         bottom: 10px;
+       }
+
+       .product-collection-name{
+         font-size: 12px;
+       }
+
+       .product-name{
+         font-size: 14px;
+       }
+
+       .product-rating-star-box{
+         margin-bottom: 8px;
+       }
+
+       .product-price{
+         font-size: 14px;
+       }
+
+       .product-price span{
+         font-size: 14px;
+       }
+
+
+     }
+
+       @media screen and (min-width: 600px) and  (max-width: 768px) {
+
+        .product-collection-name {
+         font-size: 12px;
+       }
+
+       .product-name {
+         font-size: 16px;
+       }
+
+       .product-price {
+         font-size: 16px;
+       }
+       .product-price span{
+         font-size: 16px;
+       }
+
+     }
+
+
+     @media screen and (max-width: 425px) {
+       
+   
+
+    .product-heading-text{
+           font-size: 18px;
+       }
+
+       .product-heading-text a{
+         font-size: 12px;
+       }
+     
+
+    .product-card-container{
+         width: 100%;
+       }
+      .product-collection-name {
+       font-size: 14px;
+     }
+
+     .product-name {
+       font-size: 16px;
+     }
+
+     .product-price {
+       font-size: 16px;
+     }
+
+     .product-price span{
+       font-size: 16px;
+     }
+
+     .add-cart-button{
+       width: 90%;
+       height: 35px;
+       font-size: 10px;
+     }
+
+
+
+   }
+{% endstyle %}
+
+<div class="main-test-coll">
+  <div class="main-test-inner-coll">
+  {% for heading in section.blocks %}
+    {% case heading.type %}
+      {% when 'head-ing' %}
+        <div class="heading-of-product-box">
+          <div class="product-heading-text">
+            {{ heading.settings['head-title'] }}
+          </div>
+          <div class="product-heading-text">
+            <a href="{{ heading.settings.link }}">
+              {{ heading.settings['head-link'] }}
+            </a>
+          </div>
+        </div>
+    {% endcase %}
+  {% endfor %}
+  <div class="inner-test-coll">
+    {% for product in section.settings.collection.products limit: section.settings.product-limit %}
+      <div class="product-card-container">
+        <div class="product-img-box">
+          <div class="product-img-inner-box">
+            <img src="{{ product.images[0] | img_url : 'master' }}" class="product-img-1">
+            {% if product.images[1] != blank %}
+              <img src="{{ product.images[1] | img_url: 'master'}}" class="product-img-2">
+            {% endif %}
+          </div>
+          {% if product.compare_at_price_min > product.price %}
+            <div class="sale">sale</div>
+          {% endif %}
+          <div class="product-button-box">
+            <form method="post" action="/cart/add">
+              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+              <input type="submit" value="Add to cart" class="add-cart-button">
+            </form>
+          </div>
+        </div>
+
+        <div class="product-info-box">
+          {% if template.name != 'product' %}
+            <div class="product-collection-name">
+              <a href="{{ product.collections[0].url }}" target="_blank">
+                {{ product.collections[0].title }}
+              </a>
+            </div>
+          {% endif %}
+
+          <div class="product-name">
+            <a href="{{ product.url |  within : collection }}" target="_blank">
+              {{ product.title }}
+            </a>
+          </div>
+          {% if template.name != 'product' %}
+            <div class="product-rating-star-box">
+              <!-- yellow -->
+              <svg
+                height="18px"
+                width="18px"
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 47.94 47.94"
+                xml:space="preserve"
+                fill="#000000"
+                class="stars-size"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                <g id="SVGRepo_iconCarrier">
+                <path style="fill:#f4b104;"
+                d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z" />
+                </g>
+              </svg>
+
+              <svg
+                height="18px"
+                width="18px"
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 47.94 47.94"
+                xml:space="preserve"
+                fill="#000000"
+                class="stars-size"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                <g id="SVGRepo_iconCarrier">
+                <path style="fill:#f4b104;"
+                d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z" />
+                </g>
+              </svg>
+
+              <svg
+                height="18px"
+                width="18px"
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 47.94 47.94"
+                xml:space="preserve"
+                fill="#000000"
+                class="stars-size"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                <g id="SVGRepo_iconCarrier">
+                <path style="fill:#f4b104;"
+                d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z" />
+                </g>
+              </svg>
+
+              <svg
+                height="18px"
+                width="18px"
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 47.94 47.94"
+                xml:space="preserve"
+                fill="#000000"
+                class="stars-size"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                <g id="SVGRepo_iconCarrier">
+                <path style="fill:#f4b104;"
+                d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z" />
+                </g>
+              </svg>
+
+              <!--  -->
+
+              <svg
+                height="18px"
+                width="18px"
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 47.94 47.94"
+                xml:space="preserve"
+                fill="#000000"
+                class="stars-size"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                <g id="SVGRepo_iconCarrier">
+                <path style="fill:#e0e0e0;"
+                d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757 c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c-0.608,0.593-0.886,1.448-0.742,2.285l2.065,12.042 c0.362,2.109-1.852,3.717-3.746,2.722l-10.814-5.685c-0.752-0.395-1.651-0.395-2.403,0l-10.814,5.685 c-1.894,0.996-4.108-0.613-3.746-2.722l2.065-12.042c0.144-0.837-0.134-1.692-0.742-2.285l-8.749-8.528 c-1.532-1.494-0.687-4.096,1.431-4.403l12.091-1.757c0.841-0.122,1.568-0.65,1.944-1.412l5.407-10.956 C22.602,0.567,25.338,0.567,26.285,2.486z" />
+                </g>
+              </svg>
+            </div>
+          {% endif %}
+          <div class="product-price">
+            {% if product.compare_at_price_min > product.price %}
+              <span> {{ product.compare_at_price_min | money }}</span>
+            {% endif %}
+            {{ product.price | money }}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+<script>
+  $(document).on('mouseenter','.product-card-container', function(){
+  $('.product-button-box').removeClass('up-button');
+  $(this).find('.product-button-box').addClass('up-button');
+  $(this).find('.product-img-2').show();
+  });
+
+  $(document).on('mouseleave','.product-card-container', function(){
+  $(this).find('.product-button-box').removeClass('up-button');
+  $(this).find('.product-img-2').hide();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Test Collection",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection  box"
+    }, {
+      "type": "color",
+      "id": "main-background-color",
+      "default": "#fff",
+      "label": "Change Background"
+    },
+    {
+      "type": "range",
+      "id": "top-bottom-padding",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 50,
+      "label": "Top Bottom Padding"
+    },
+    {
+      "type": "range",
+      "id": "left-right-padding",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 40,
+      "label": "Left Right Padding"
+    },
+    {
+      "type": "header",
+      "content": "Set display product limit and customs"
+    },
+    {
+      "type": "range",
+      "id": "product-limit",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 4,
+      "label": "Show Number of Product"
+    },
+    {
+      "type": "header",
+      "content": "Item Card "
+    },
+    {
+      "type": "color",
+      "id": "product-box-bacground",
+      "default": "#fff",
+      "label": "Change background Color Of product Card"
+    },
+    {
+      "type": "range",
+      "id": "product-box-border-radius",
+      "min": 0,
+      "max": 200,
+      "unit": "px",
+      "step": 2,
+      "default": 0,
+      "label": " Adjust Border Radius of Product Card"
+    },
+    {
+      "type": "header",
+      "content": "  Image "
+    },
+    {
+      "type": "range",
+      "id": "product-img-height",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "%",
+      "default": 116,
+      "label": " Adjust Height of Image"
+    },
+    {
+      "type": "header",
+      "content": "Sale label Customs"
+    },
+    {
+      "type": "range",
+      "id": "top-position",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 2,
+      "label": "Set Top Position"
+    },
+    {
+      "type": "range",
+      "id": "right-position",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 2,
+      "label": "Set Right Position"
+    },
+    {
+      "type": "range",
+      "id": "sale-top-bottom-padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "label": "Sale Box Top Bottom Padding"
+    },
+    {
+      "type": "range",
+      "id": "sale-left-right-padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 5,
+      "label": "Sale Box Left Right Padding"
+    },
+    {
+      "type": "range",
+      "id": "sale-font-size",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "label": "Sale Text font Size"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "id": "sale-text-transform",
+      "default": "uppercase",
+      "label": "Sale Text Transfrom "
+    },
+    {
+      "type": "color",
+      "id": "sale-font-color",
+      "default": "#007766",
+      "label": "Sale Text font Color"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "sans-serif",
+          "label": "Sans Serif"
+        },
+        {
+          "value": "assistant",
+          "label": "Assistant"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        }
+      ],
+      "id": "sale-font-family",
+      "default": "inter",
+      "label": "Sale Text font Family "
+    },
+    {
+      "type": "range",
+      "id": "sale-font-weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500,
+      "label": "Sale Text font-weight "
+    },
+    {
+      "type": "color",
+      "id": "sale-background-color",
+      "default": "#fff",
+      "label": "Sale Box Background Color"
+    },
+    {
+      "type": "range",
+      "id": "sale-box-radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "label": "Border Radius"
+    },
+    {
+      "type": "header",
+      "content": "Add Cart Button Customs"
+    },
+    {
+      "type": "range",
+      "id": "cart-btn-height",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 45,
+      "label": "Set Height Of Button"
+    },
+    {
+      "type": "range",
+      "id": "cart-btn-width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 80,
+      "label": "Set Width of Button"
+    },
+    {
+      "type": "range",
+      "id": "cart-btn-radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30,
+      "label": "Adjust Border Rdius"
+    },
+    {
+      "type": "range",
+      "id": "cart-btn-font-size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "label": "Set Font Size of Button"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "id": "cart-btn-text-transform",
+      "default": "uppercase",
+      "label": "Change Text Transform"
+    },
+    {
+      "type": "color",
+      "id": "cart-btn-font-color",
+      "default": "#ffffff",
+      "label": "Change Font Color"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "sans-serif",
+          "label": "Sans Serif"
+        },
+        {
+          "value": "assistant",
+          "label": "Assistant"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        }
+      ],
+      "id": "cart-btn-fant-family",
+      "default": "sans-serif",
+      "label": "Change Font Family"
+    },
+    {
+      "type": "color",
+      "id": "cart-btn-background-color",
+      "default": "#007766",
+      "label": "Change Background Color"
+    },
+    {
+      "type": "range",
+      "id": "border-thickness",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1,
+      "label": "Border Thickness"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "id": "border",
+      "default": "none",
+      "label": "Add cart Button Border"
+    },
+    {
+      "type": "color",
+      "id": "border-color",
+      "default": "#000000",
+      "label": "Add cart Button Border color"
+    },
+    {
+      "type": "header",
+      "content": "Button Hover Effect"
+    },
+    {
+      "type": "color",
+      "id": "cart-btn-background-color-hover",
+      "default": "#ff6900",
+      "label": "Change Background Color on Hover"
+    },
+    {
+      "type": "color",
+      "id": "cart-btn-font-color-hover",
+      "default": "#ffffff",
+      "label": "Change Font Color on Hover"
+    },
+    {
+      "type": "range",
+      "id": "border-thickness-hover",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1,
+      "label": "Border Thickness on Hover"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "id": "border-hover",
+      "default": "none",
+      "label": "Add cart Button Border on Hover"
+    },
+    {
+      "type": "color",
+      "id": "border-color-hover",
+      "default": "#000000",
+      "label": "Add cart Button Border color Hover"
+    },
+    {
+      "type": "header",
+      "content": "Product Info Customs"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        },
+        {
+          "value": "justify",
+          "label": "Justify"
+        }
+      ],
+      "id": "product-info-align",
+      "default": "center",
+      "label": "Adjust Alignment Of Text"
+    },
+    {
+      "type": "header",
+      "content": "Product Collection Name Customs"
+    },
+    {
+      "type": "range",
+      "id": "product-collection-name-font-size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "label": "Font size"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "sans-serif",
+          "label": "Sans Serif"
+        },
+        {
+          "value": "assistant",
+          "label": "Assistant"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        }
+      ],
+      "id": "product-collection-name-font-family",
+      "default": "inter",
+      "label": "Font Family"
+    },
+    {
+      "type": "range",
+      "id": "product-collection-name-font-weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500,
+      "label": "Font Weight"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "id": "product-collection-name-text-transform",
+      "default": "capitalize",
+      "label": "Text Transform"
+    },
+    {
+      "type": "color",
+      "id": "product-collection-name-font-color",
+      "default": "#c2c2c2",
+      "label": "Font Color"
+    },
+    {
+      "type": "color",
+      "id": "product-collection-name-font-color-hover",
+      "default": "#ff6900",
+      "label": "Font Color On Hover"
+    },
+    {
+      "type": "header",
+      "content": "Product Name Customs"
+    },
+    {
+      "type": "range",
+      "id": "product-name-font-size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "label": "Font size"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "sans-serif",
+          "label": "Sans serif"
+        },
+        {
+          "value": "assistant",
+          "label": "Assistant"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        }
+      ],
+      "id": "product-name-font-family",
+      "default": "montserrat",
+      "label": "Font Family"
+    },
+    {
+      "type": "range",
+      "id": "product-name-font-weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 700,
+      "label": "Font Weight"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "id": "product-name-text-transform",
+      "default": "capitalize",
+      "label": "Text Transform"
+    },
+    {
+      "type": "color",
+      "id": "product-name-font-color",
+      "default": "#000000",
+      "label": "Font Color"
+    },
+    {
+      "type": "range",
+      "id": "product-name-top-margin",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "label": "Margin Top"
+    },
+    {
+      "type": "range",
+      "id": "product-name-bottom-margin",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8,
+      "label": "Margin Bottom"
+    },
+    {
+      "type": "range",
+      "id": "product-name-line-height",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 1.2,
+      "label": "Text Line Height"
+    },
+    {
+      "type": "color",
+      "id": "product-name-font-color-hover",
+      "default": "#000000",
+      "label": "Font Color On Hover"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "underline",
+          "label": "Underline"
+        },
+        {
+          "value": "overline",
+          "label": "Overline"
+        },
+        {
+          "value": "underline overline",
+          "label": "Underline and Overline"
+        }
+      ],
+      "id": "product-name-decoration-hover",
+      "default": "underline",
+      "label": "Set Text Decoration On Hover"
+    },
+    {
+      "type": "header",
+      "content": "Custom Options For Stars or rating box"
+    },
+    {
+      "type": "range",
+      "id": "star-box-margin-bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "label": "Star box Bottom Margin"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "id": "star-align",
+      "default": "center",
+      "label": "Star Alignment"
+    },
+    {
+      "type": "range",
+      "id": "star-gap",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 5,
+      "label": "Star gap"
+    },
+    {
+      "type": "header",
+      "content": "Custom Options For Price style"
+    },
+    {
+      "type": "range",
+      "id": "product-price-font-size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16,
+      "label": "Main Price Font Size"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "sans-serif",
+          "label": "Sans Serif"
+        },
+        {
+          "value": "assistant",
+          "label": "Assistant"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        }
+      ],
+      "id": "product-price-font-family",
+      "default": "inter",
+      "label": "Main Price Font family"
+    },
+    {
+      "type": "range",
+      "id": "product-price-font-weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500,
+      "label": "Main Price Font Weight"
+    },
+    {
+      "type": "color",
+      "id": "product-price-font-color",
+      "default": "#6c6c6c",
+      "label": "Main Price Font color"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "none ",
+          "label": "None"
+        }
+      ],
+      "id": "product-price-text-transform",
+      "default": "capitalize",
+      "label": "Price Text Trasform Size"
+    },
+    {
+      "type": "header",
+      "content": "Stike Price Custom"
+    },
+    {
+      "type": "range",
+      "id": "product-strike-price-font-size",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 14,
+      "label": "strike Price Font Size"
+    },
+    {
+      "type": "select",
+      "options": [
+        {
+          "value": "sans-serif",
+          "label": "Sans Serif"
+        },
+        {
+          "value": "assistant",
+          "label": "Assistant"
+        },
+        {
+          "value": "montserrat",
+          "label": "Montserrat"
+        },
+        {
+          "value": "inter",
+          "label": "Inter"
+        }
+      ],
+      "id": "product-strike-price-font-family",
+      "default": "inter",
+      "label": "strike Price Font family"
+    },
+    {
+      "type": "range",
+      "id": "product-strike-price-font-weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 500,
+      "label": "strike Price Font Weight"
+    },
+    {
+      "type": "color",
+      "id": "product-strike-price-font-color",
+      "default": "#007766",
+      "label": "strike Price Font color"
+    }
+
+  ],
+
+  "blocks":[
+    {
+      "name": "Heading",
+      "type": "head-ing",
+      "settings":[
+         {
+          "type": "richtext",
+          "id": "head-title",
+          "label": "Add Title"
+        },
+        {
+          "type": "range",
+          "id": "heading-bottom-margin",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 24,
+          "label": "Head Box Bottom Margin"
+        },
+        {
+          "type": "range",
+          "id": "title-font-size",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 28,
+          "label": "Font Size"
+        },
+        {
+          "type": "select",
+          "options": [
+            {
+              "value": "sans-serif",
+              "label": "Sans Serif"
+            },
+            {
+              "value": "assistant",
+              "label": "Assistant"
+            },
+            {
+              "value": "montserrat",
+              "label": "Montserrat"
+            },
+            {
+              "value": "inter",
+              "label": "Inter"
+            }
+          ],
+          "id": "title-font-family",
+          "default": "montserrat",
+          "label": "Font Family"
+        },
+        {
+          "type": "range",
+          "id": "title-font-weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 600,
+          "label": "Font Weight"
+        },
+        {
+          "type": "select",
+          "options": [
+            {
+              "value": "lowercase",
+              "label": "Lowercase"
+            },
+            {
+              "value": "capitalize",
+              "label": "Capitalize"
+            },
+            {
+              "value": "uppercase",
+              "label": "Uppercase"
+            },
+            {
+              "value": "none",
+              "label": "None"
+            }
+          ],
+          "id": "title-text-transform",
+          "default": "capitalize",
+          "label": "Text Transform"
+        },
+        {
+          "type": "color",
+          "id": "title-font-color",
+          "default": "#000000",
+          "label": "Change Title Color"
+        },
+        {
+          "type": "textarea",
+          "id": "head-link",
+          "label": "Add your text"
+        },
+        {
+          "type": "range",
+          "id": "link-font-size",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 14,
+          "label": "Font Size"
+        },
+        {
+          "type": "range",
+          "id": "link-font-weight",
+          "min": 100,
+          "max": 900,
+          "step": 100,
+          "default": 500,
+          "label": "Font Weight"
+        },
+        {
+          "type": "color",
+          "id": "link-font-color",
+          "default": "#000000",
+          "label": "Change Title Color"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "button link"
+        }
+      ]
+
+    }
+  ],
+  "presets": [
+
+  {
+    "name": "Test Collection"
+  }
+  ]
+}
+{% endschema %}
