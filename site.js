@@ -217,7 +217,7 @@
     var $document = $(document);
     var megaMenuSelectors = ".jewel-menu-main-container, .collection-menu-main-container, .top-about-menu-main-container";
 
-    if (!(".jewel-option, .collection-menu, .about-menu" && $(".jewel-option, .collection-menu, .about-menu").length)) return;
+    if (!$(".jewel-option, .collection-menu, .about-menu").length) return;
 
     if (!$(".mavie-mega-menu-overlay").length) {
       $("<div class='mavie-mega-menu-overlay' aria-hidden='true'></div>").appendTo("body");
