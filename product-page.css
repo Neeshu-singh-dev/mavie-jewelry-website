@@ -3733,11 +3733,13 @@ align-items: center; */
 
 .product-page-menu-inner-conainer {
     margin: auto;
-    width: 933px;
+    width: 1000px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 40px;
+    justify-content:center;
+    gap: 24px 40px;
+    padidng-bottom:10px;
 }
 
 .product-page-menu-options {
