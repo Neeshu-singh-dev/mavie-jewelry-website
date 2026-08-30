@@ -217,7 +217,7 @@
     var $document = $(document);
     var megaMenuSelectors = ".jewel-menu-main-container, .collection-menu-main-container, .top-about-menu-main-container";
 
-    if (!$(".jewel-option, .collection-menu, .about-menu").length) return;
+    if (!(".jewel-option, .collection-menu, .about-menu" && $(".jewel-option, .collection-menu, .about-menu").length)) return;
 
     if (!$(".mavie-mega-menu-overlay").length) {
       $("<div class='mavie-mega-menu-overlay' aria-hidden='true'></div>").appendTo("body");
@@ -297,13 +297,29 @@
       deliveryNote.innerHTML = "<span class='mavie-delivery-icon'><img src='Images/mavie-delivery.svg' alt='' aria-hidden='true'></span><span>Complementary Free Express Delivery</span>";
     }
 
-    /* Keep only true item-style products in You May Also Like. */
+    /* You May Also Like: real item images with Gold/Silver variants. */
     var relatedSlides = document.querySelectorAll(".also-like-slider .swiper-wrapper > .swiper-slide");
     var relatedProducts = [
-      { image: "Images/necklace-image.jpg", title: "Necklace" },
-      { image: "Images/rings-image-1.jpg", title: "Ring" },
-      { image: "Images/bracelet-model.jpg", title: "Bracelet" },
-      { image: "Images/earing-item-1.jpg", title: "Earrings" }
+      {
+        gold: "Images/season-to-shine-necklace-gold.jpg",
+        silver: "Images/season-to-shine-necklace-sliver.jpg",
+        title: "Necklace"
+      },
+      {
+        gold: "Images/latest-arrival-ring-gold.jpg",
+        silver: "Images/latest-arrival-ring-silver.jpg",
+        title: "Ring"
+      },
+      {
+        gold: "Images/latest-arrival-bracelet-gold.jpg",
+        silver: "Images/latest-arrival-bracelet-silver.jpg",
+        title: "Bracelet"
+      },
+      {
+        gold: "Images/latest-arrival-earring-gold.jpg",
+        silver: "Images/latest-arrival-earring-sliver.jpg",
+        title: "Earrings"
+      }
     ];
 
     Array.prototype.forEach.call(relatedSlides, function (slide, index) {
@@ -312,14 +328,19 @@
         return;
       }
 
+      slide.style.display = "";
       var product = relatedProducts[index];
       var image = slide.querySelector(".also-like-img");
       var title = slide.querySelector(".also-like-text:not(.also-like-price)");
       var price = slide.querySelector(".also-like-price");
 
+      slide.setAttribute("data-gold-image", product.gold);
+      slide.setAttribute("data-silver-image", product.silver);
+      slide.setAttribute("data-selected-color", "gold");
+
       if (image) {
-        image.src = product.image;
-        image.alt = product.title;
+        image.src = product.gold;
+        image.alt = product.title + " - Gold";
       }
       if (title) title.textContent = product.title;
       if (price) price.textContent = "Starts from - $12.00";
@@ -333,7 +354,7 @@
       sizeSwiper.update();
     }
 
-    /* Make the related-product variant pills behave like the product-card pills. */
+    /* Make related-product Gold/Silver pills switch the actual item image. */
     $(".also-like-main-box .golden-box, .also-like-main-box .silver-box")
       .attr("role", "button")
       .attr("tabindex", "0");
@@ -343,11 +364,25 @@
 
     $(document).on("click.mavieRelatedVariants", ".also-like-main-box .golden-box", function (event) {
       event.stopPropagation();
+      var slide = $(this).closest(".swiper-slide")[0];
+      var image = slide && slide.querySelector(".also-like-img");
+      if (slide && image) {
+        image.src = slide.getAttribute("data-gold-image");
+        image.alt = (image.alt || "Product").replace(/ - (Gold|Silver)$/, "") + " - Gold";
+        slide.setAttribute("data-selected-color", "gold");
+      }
       $(this).addClass("golden-active").siblings(".silver-box").removeClass("silver-active");
     });
 
     $(document).on("click.mavieRelatedVariants", ".also-like-main-box .silver-box", function (event) {
       event.stopPropagation();
+      var slide = $(this).closest(".swiper-slide")[0];
+      var image = slide && slide.querySelector(".also-like-img");
+      if (slide && image) {
+        image.src = slide.getAttribute("data-silver-image");
+        image.alt = (image.alt || "Product").replace(/ - (Gold|Silver)$/, "") + " - Silver";
+        slide.setAttribute("data-selected-color", "silver");
+      }
       $(this).addClass("silver-active").siblings(".golden-box").removeClass("golden-active");
     });
 
