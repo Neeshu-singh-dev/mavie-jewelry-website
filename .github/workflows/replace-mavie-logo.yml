@@ -1,0 +1,82 @@
+name: Replace Mavie Header Logo
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.github/workflows/replace-mavie-logo.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  replace-logo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Replace header logo on all HTML pages
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          replacement = '''<div class="top-head-logo-box">
+              <a href="index.html" class="mavie-logo-link" aria-label="Mavie Jewelry home">
+                <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
+              </a>
+            </div>'''
+
+          changed = []
+          pattern = re.compile(r'<div\s+class=["\']top-head-logo-box["\'][^>]*>.*?</div>', re.I | re.S)
+
+          for path in Path('.').rglob('*.html'):
+              if '.git' in path.parts:
+                  continue
+              text = path.read_text(encoding='utf-8')
+              new_text, count = pattern.subn(replacement, text, count=1)
+              if count and new_text != text:
+                  path.write_text(new_text, encoding='utf-8')
+                  changed.append(str(path))
+
+          print('Changed HTML files:')
+          for path in changed:
+              print(path)
+          if not changed:
+              raise SystemExit('No header logo blocks were found; stopping without changes.')
+
+      - name: Verify logo replacement
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          bad = []
+          found = []
+          for path in Path('.').rglob('*.html'):
+              if '.git' in path.parts:
+                  continue
+              text = path.read_text(encoding='utf-8')
+              if 'Images/mavie-logo.png' in text:
+                  found.append(str(path))
+                  if not re.search(r'<a\s+href=["\']index\.html["\'][^>]*>\s*<img\s+src=["\']Images/mavie-logo\.png["\']', text, re.I):
+                      bad.append(str(path))
+          print('Pages using new logo:', len(found))
+          if bad:
+              print('Invalid logo links:', bad)
+              raise SystemExit(1)
+          if not found:
+              raise SystemExit('No HTML page contains the new logo.')
+
+      - name: Commit website changes and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html'
+          git rm .github/workflows/replace-mavie-logo.yml
+          git diff --cached --quiet && { echo "No changes to commit"; exit 1; }
+          git commit -m "fix: use PNG Mavie logo linked to home"
+          git push
