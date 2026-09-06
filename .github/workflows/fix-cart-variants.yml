@@ -1,0 +1,32 @@
+name: Fix Cart Variant Sizes
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-cart-variants:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Apply cart size and stock rules
+        run: python3 scripts/fix-cart-variants.py
+
+      - name: Commit cart changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add cart.js
+          if git diff --cached --quiet; then
+            echo "No cart changes needed."
+          else
+            git commit -m "Fix jewelry cart size variants and stock"
+            git push
+          fi
