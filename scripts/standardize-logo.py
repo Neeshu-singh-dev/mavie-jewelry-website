@@ -108,9 +108,21 @@ logo_css_path = Path('logo.css')
 logo_css_path.write_text(LOGO_CSS.strip() + '\n', encoding='utf-8')
 
 logo_link = '<link rel="stylesheet" href="logo.css">'
+cart_link = '<script src="cart.js"></script>'
+
 for path in Path('.').glob('*.html'):
     text = path.read_text(encoding='utf-8')
+    changed = False
+
     if logo_link not in text:
         text = re.sub(r'\s*</head>', f'\n    {logo_link}\n</head>', text, count=1, flags=re.IGNORECASE)
-        path.write_text(text, encoding='utf-8')
+        changed = True
         print(f'Added logo.css link: {path}')
+
+    if cart_link not in text:
+        text = re.sub(r'\s*</body>', f'\n    {cart_link}\n</body>', text, count=1, flags=re.IGNORECASE)
+        changed = True
+        print(f'Added cart.js link: {path}')
+
+    if changed:
+        path.write_text(text, encoding='utf-8')
