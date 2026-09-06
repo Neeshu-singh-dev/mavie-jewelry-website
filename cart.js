@@ -3,7 +3,8 @@
 
   var STORAGE_KEY = "mavieCart";
   var COLLECTION_URL = "product-collection.html";
-  var JEWELRY_SIZES = ["5", "5.5", "6", "6.5", "7", "7.5"];
+  var JEWELRY_SIZES = ["5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5"];
+  var OUT_OF_STOCK_SIZES = ["7"];
 
   var seedCart = [
     { id: "demo-ring-gold-silver", name: "Ring", price: 99, image: "Images/rings-image-1.jpg", color: "Gold/Silver", size: "5.5", quantity: 1 },
@@ -96,7 +97,7 @@
     if (!boughtTogetherProducts.length) return "";
     return '<div class="cart-drawer-bought-together-heading">bought together</div>' + boughtTogetherProducts.map(function (product) {
       var image = product.color.toLowerCase() === "silver" ? product.silverImage : product.goldImage;
-      var sizeSelector = supportsSize(product.name) ? '<div class="cart-drawer-item-size-box"><select class="mavie-bought-size" aria-label="Size">' + JEWELRY_SIZES.map(function (size) { return '<option value="' + size + '"' + (size === product.size ? ' selected' : '') + '>' + size + '</option>'; }).join("") + '</select></div>' : '';
+      var sizeSelector = supportsSize(product.name) ? '<div class="cart-drawer-item-size-box"><select class="mavie-bought-size" aria-label="Size">' + JEWELRY_SIZES.map(function (size) { var unavailable = OUT_OF_STOCK_SIZES.indexOf(size) !== -1; return '<option value="' + size + '"' + (size === product.size ? ' selected' : '') + (unavailable ? ' disabled' : '') + '>' + size + (unavailable ? ' - Out of stock' : '') + '</option>'; }).join("") + '</select></div>' : '';
       return '<div class="cart-drawer-item-box mavie-bought-item" data-bought-id="' + escapeHtml(product.id) + '"><div class="cart-drawer-item-img-box"><img src="' + escapeHtml(image) + '" alt="' + escapeHtml(product.name) + '" class="cart-drawer-item-img mavie-bought-image"></div><div class="cart-drawer-item-info"><div class="cart-drawer-item-name">' + escapeHtml(product.name) + '</div><div class="cart-drawer-item-color-box"><div class="cart-drawer-item-gold ' + (product.color === "Gold" ? "gold-active" : "") + ' mavie-bought-gold" role="button" tabindex="0"><div class="item-gold"></div></div><div class="cart-drawer-item-silver ' + (product.color === "Silver" ? "silver-active" : "") + ' mavie-bought-silver" role="button" tabindex="0"><div class="item-silver"></div></div></div>' + sizeSelector + '</div><div class="cart-drawer-item-price">' + money(product.price) + '</div><button type="button" class="cart-drawer-add-cart-btn mavie-bought-add">add to cart</button></div>';
     }).join("");
   }
@@ -189,6 +190,7 @@
           var color = boughtBox.querySelector(".gold-active") ? "Gold" : "Silver";
           var sizeSelect = boughtBox.querySelector(".mavie-bought-size");
           var size = sizeSelect ? sizeSelect.value : "";
+          if (supportsSize(product.name) && OUT_OF_STOCK_SIZES.indexOf(size) !== -1) { return; }
           var image = color === "Gold" ? product.goldImage : product.silverImage;
           addToCart({ id: product.id, name: product.name, price: product.price, image: image, color: color, size: size, quantity: 1 });
         }
