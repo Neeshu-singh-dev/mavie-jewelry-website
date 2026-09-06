@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,60 +17,55 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Standardize header and footer logo markup on every HTML page
-        shell: python
         run: |
+          python3 <<'PY'
           from pathlib import Path
           import re
 
+          header_replacement = '''<div class="top-head-logo-box">
+              <a href="index.html" class="mavie-logo-link" aria-label="Mavie Jewelry home">
+                <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
+              </a>
+            </div>'''
+
+          footer_replacement = '''<div class="mavie-footer-logo-box">
+              <a href="index.html" class="mavie-logo-footer-link">
+                <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
+              </a>
+            </div>'''
+
+          header_box = re.compile(
+              r'<div\b[^>]*class=["\'][^"\']*\btop-head-logo-box\b[^"\']*["\'][^>]*>[\s\S]*?</div>',
+              re.IGNORECASE
+          )
+
+          footer_box = re.compile(
+              r'<div\b[^>]*class=["\'][^"\']*\bmavie-footer-logo-box\b[^"\']*["\'][^>]*>[\s\S]*?</div>',
+              re.IGNORECASE
+          )
+
           changed = []
-
-          header_pattern = re.compile(
-              r'<a\b(?=[^>]*\bclass=["\']mavie-logo-link["\'])[^>]*\bhref=["\']index\.html["\'][^>]*>\s*'
-              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*'
-              r'</a>', re.IGNORECASE)
-
-          header_replacement = '''<a href="index.html" class="mavie-logo-link" aria-label="Mavie Jewelry home">
-            <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
-          </a>'''
-
-          footer_replacement = '''<a href="index.html" class="mavie-logo-footer-link">
-            <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
-          </a>'''
-
-          footer_pattern = re.compile(
-              r'<a\b(?=[^>]*\bclass=["\']mavie-logo-footer-link["\'])[^>]*\bhref=["\']index\.html["\'][^>]*>\s*'
-              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*</a>', re.IGNORECASE)
-
-          old_footer_pattern = re.compile(
-              r'<a\b[^>]*>\s*'
-              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*</a>', re.IGNORECASE)
-
-          box_pattern = re.compile(
-              r'<div\s+class=["\']mavie-footer-logo-box["\'][^>]*>[\s\S]*?</div>', re.IGNORECASE)
 
           for path in Path('.').rglob('*.html'):
               if '.git' in path.parts:
                   continue
+
               text = path.read_text(encoding='utf-8')
               original = text
 
-              text = header_pattern.sub(header_replacement, text)
-              text = footer_pattern.sub(footer_replacement, text)
-
-              def normalize_footer_box(match):
-                  return old_footer_pattern.sub(footer_replacement, match.group(0))
-
-              text = box_pattern.sub(normalize_footer_box, text)
+              text = header_box.sub(header_replacement, text)
+              text = footer_box.sub(footer_replacement, text)
 
               if text != original:
                   path.write_text(text, encoding='utf-8')
                   changed.append(str(path))
 
-          print('Updated HTML:', ', '.join(changed) if changed else 'none')
+          print('Updated HTML pages:', ', '.join(changed) if changed else 'none')
+          PY
 
       - name: Add centralized logo styles to style.css
-        shell: python
         run: |
+          python3 <<'PY'
           from pathlib import Path
 
           path = Path('style.css')
@@ -119,6 +115,7 @@ jobs:
 
           path.write_text(text, encoding='utf-8')
           print('Centralized logo CSS is present.')
+          PY
 
       - name: Commit logo markup and style changes
         run: |
@@ -128,6 +125,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No logo changes needed."
           else
-            git commit -m "Apply centralized header and footer logo styles"
+            git commit -m "Standardize header and footer logos across all pages"
             git push
           fi
