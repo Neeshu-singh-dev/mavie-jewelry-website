@@ -4189,3 +4189,35 @@ input:focus {
 
 
 /* FOOTER SECTION MEDIA QUERY END*/
+
+/* MAVIE GLOBAL LOGO STYLES */
+.mavie-logo-link {
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mavie-logo-link img {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .mavie-logo-link {
+    width: 110px;
+  }
+}
+
+.mavie-logo-footer-link {
+  width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mavie-logo-footer-link img {
+  width: 100%;
+  height: auto;
+}
+/* MAVIE GLOBAL LOGO STYLES END */
