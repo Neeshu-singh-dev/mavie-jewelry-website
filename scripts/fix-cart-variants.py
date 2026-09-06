@@ -25,5 +25,21 @@ if old_add in text:
 else:
     raise SystemExit("Expected Bought Together add-to-cart block was not found")
 
+# Do not allow an unavailable ring/bracelet size from the product page into the cart.
+old_add_to_cart = '''var normalized = normalizeCartItem(Object.assign({ quantity: 1 }, item));\n    normalized.quantity = Math.max(1, Number(normalized.quantity || 1));'''
+new_add_to_cart = '''var normalized = normalizeCartItem(Object.assign({ quantity: 1 }, item));\n    if (supportsSize(normalized.name) && OUT_OF_STOCK_SIZES.indexOf(String(normalized.size || "")) !== -1) { return; }\n    normalized.quantity = Math.max(1, Number(normalized.quantity || 1));'''
+if old_add_to_cart in text:
+    text = text.replace(old_add_to_cart, new_add_to_cart)
+else:
+    raise SystemExit("Expected addToCart normalization block was not found")
+
+# Keep subtotal, tax/shipping note, and checkout controls together under one footer parent.
+old_footer = '''renderBoughtTogether() + '<div class="cart-drawer-sub-total-box"><div class="subtotal-text">subtotal</div><div class="subtotal-price">' + money(getSubtotal()) + '</div></div><div class="cart-drawer-total-price-note">Tax included and shipping calculated at checkout</div><div class="cart-drawer-checkout-btn-box"><button type="button" class="cart-drawer-checkout-btn">checkout</button></div>';'''
+new_footer = '''renderBoughtTogether() + '<div class="cart-drawer-footer"><div class="cart-drawer-sub-total-box"><div class="subtotal-text">subtotal</div><div class="subtotal-price">' + money(getSubtotal()) + '</div></div><div class="cart-drawer-total-price-note">Tax included and shipping calculated at checkout</div><div class="cart-drawer-checkout-btn-box"><button type="button" class="cart-drawer-checkout-btn">checkout</button></div></div>';'''
+if old_footer in text:
+    text = text.replace(old_footer, new_footer)
+else:
+    raise SystemExit("Expected cart drawer footer markup was not found")
+
 path.write_text(text, encoding="utf-8")
-print("Cart numeric sizes and out-of-stock size handling updated.")
+print("Cart numeric sizes, out-of-stock handling, and footer wrapper updated.")
