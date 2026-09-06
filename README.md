@@ -32,3 +32,5 @@ structure — not to sell anything.
 
 If you have any questions about this project or want to connect, feel free to reach out through my
 portfolio or GitHub profile.
+
+<!-- Logo styling standardized across all pages. -->
