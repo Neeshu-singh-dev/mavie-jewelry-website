@@ -1,0 +1,43 @@
+name: Add Cart Drawer Footer Wrapper
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  add-cart-footer-wrapper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Add cart footer wrapper script to all pages
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          script = '<script src="cart-footer-wrapper.js"></script>'
+
+          for html_path in Path('.').glob('*.html'):
+              content = html_path.read_text(encoding='utf-8')
+              if script not in content:
+                  content = content.replace('</body>', '  ' + script + '\n</body>', 1)
+                  html_path.write_text(content, encoding='utf-8')
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          if git diff --cached --quiet; then
+            echo "No changes needed."
+          else
+            git commit -m "Wrap cart drawer footer elements"
+            git push
+          fi
