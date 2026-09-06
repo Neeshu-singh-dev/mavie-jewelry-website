@@ -23,75 +23,111 @@ jobs:
 
           changed = []
 
-          # Header logo: remove the inline sizing/layout styles from the link and image.
           header_pattern = re.compile(
               r'<a\b(?=[^>]*\bclass=["\']mavie-logo-link["\'])[^>]*\bhref=["\']index\.html["\'][^>]*>\s*'
               r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*'
-              r'</a>',
-              re.IGNORECASE
-          )
+              r'</a>', re.IGNORECASE)
 
           header_replacement = '''<a href="index.html" class="mavie-logo-link" aria-label="Mavie Jewelry home">
             <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
           </a>'''
 
-          # Footer logo: remove inline image sizing styles and keep the standardized footer link.
-          footer_pattern = re.compile(
-              r'<a\b(?=[^>]*\bclass=["\']mavie-logo-footer-link["\'])[^>]*\bhref=["\']index\.html["\'][^>]*>\s*'
-              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*'
-              r'</a>',
-              re.IGNORECASE
-          )
-
           footer_replacement = '''<a href="index.html" class="mavie-logo-footer-link">
             <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
           </a>'''
 
-          # Also convert any older footer PNG link variants to the standardized footer class/href.
+          footer_pattern = re.compile(
+              r'<a\b(?=[^>]*\bclass=["\']mavie-logo-footer-link["\'])[^>]*\bhref=["\']index\.html["\'][^>]*>\s*'
+              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*</a>', re.IGNORECASE)
+
           old_footer_pattern = re.compile(
               r'<a\b[^>]*>\s*'
-              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*'
-              r'</a>',
-              re.IGNORECASE
-          )
+              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*</a>', re.IGNORECASE)
+
+          box_pattern = re.compile(
+              r'<div\s+class=["\']mavie-footer-logo-box["\'][^>]*>[\s\S]*?</div>', re.IGNORECASE)
 
           for path in Path('.').rglob('*.html'):
               if '.git' in path.parts:
                   continue
-
               text = path.read_text(encoding='utf-8')
               original = text
 
-              text, header_count = header_pattern.subn(header_replacement, text)
-              text, footer_count = footer_pattern.subn(footer_replacement, text)
-
-              # Only normalize old footer anchors inside the footer-logo box.
-              box_pattern = re.compile(
-                  r'(<div\s+class=["\']mavie-footer-logo-box["\'][^>]*>)([\s\S]*?)(</div>)',
-                  re.IGNORECASE
-              )
+              text = header_pattern.sub(header_replacement, text)
+              text = footer_pattern.sub(footer_replacement, text)
 
               def normalize_footer_box(match):
-                  box = match.group(0)
-                  normalized, count = old_footer_pattern.subn(footer_replacement, box)
-                  return normalized
+                  return old_footer_pattern.sub(footer_replacement, match.group(0))
 
-              text, old_footer_count = box_pattern.subn(normalize_footer_box, text)
+              text = box_pattern.sub(normalize_footer_box, text)
 
               if text != original:
                   path.write_text(text, encoding='utf-8')
                   changed.append(str(path))
 
-          print('Updated:', ', '.join(changed) if changed else 'none')
+          print('Updated HTML:', ', '.join(changed) if changed else 'none')
 
-      - name: Commit logo markup changes
+      - name: Add centralized logo styles to style.css
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('style.css')
+          if not path.exists():
+              raise SystemExit('style.css was not found at repository root.')
+
+          text = path.read_text(encoding='utf-8')
+
+          header_css = '''\n/* Mavie header logo */
+.mavie-logo-link {
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mavie-logo-link img {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .mavie-logo-link {
+    width: 110px;
+  }
+}
+'''
+
+          footer_css = '''\n/* Mavie footer logo */
+.mavie-logo-footer-link {
+  width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mavie-logo-footer-link img {
+  width: 100%;
+  height: auto;
+}
+'''
+
+          if '/* Mavie header logo */' not in text:
+              text += header_css
+          if '/* Mavie footer logo */' not in text:
+              text += footer_css
+
+          path.write_text(text, encoding='utf-8')
+          print('Centralized logo CSS is present.')
+
+      - name: Commit logo markup and style changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- '*.html'
+          git add -- '*.html' 'style.css'
           if git diff --cached --quiet; then
-            echo "No logo markup changes needed."
+            echo "No logo changes needed."
           else
-            git commit -m "Standardize header and footer logo markup"
+            git commit -m "Apply centralized header and footer logo styles"
             git push
           fi
