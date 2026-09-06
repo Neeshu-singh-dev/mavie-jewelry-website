@@ -1,57 +1,73 @@
 name: Standardize Mavie Logo Markup And Styles
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   standardize-logo:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Standardize all HTML logo containers
+      - name: Standardize logo markup and add logo CSS to every page stylesheet
+        shell: bash
         run: |
-          python3 <<'PY'
+          set -e
+
+          HEADER='    <div class="top-head-logo-box">
+              <a href="index.html" class="mavie-logo-link" aria-label="Mavie Jewelry home">
+                <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
+              </a>
+            </div>'
+
+          FOOTER='    <div class="mavie-footer-logo-box">
+              <a href="index.html" class="mavie-logo-footer-link">
+                <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
+              </a>
+            </div>'
+
+          # Normalize the contents of the logo containers on every HTML page.
+          python3 - <<'PY'
           from pathlib import Path
           import re
 
-          header = '''<div class="top-head-logo-box">
+          header = '''    <div class="top-head-logo-box">
               <a href="index.html" class="mavie-logo-link" aria-label="Mavie Jewelry home">
                 <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
               </a>
             </div>'''
 
-          footer = '''<div class="mavie-footer-logo-box">
+          footer = '''    <div class="mavie-footer-logo-box">
               <a href="index.html" class="mavie-logo-footer-link">
                 <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
               </a>
             </div>'''
 
-          header_box = re.compile(r'<div\b[^>]*class=["\'][^"\']*\btop-head-logo-box\b[^"\']*["\'][^>]*>[\s\S]*?</div>', re.I)
-          footer_box = re.compile(r'<div\b[^>]*class=["\'][^"\']*\bmavie-footer-logo-box\b[^"\']*["\'][^>]*>[\s\S]*?</div>', re.I)
+          header_box = re.compile(r'<div\\b[^>]*class=["\\\'][^"\\\']*\\btop-head-logo-box\\b[^"\\\']*["\\\'][^>]*>[\\s\\S]*?</div>', re.I)
+          footer_box = re.compile(r'<div\\b[^>]*class=["\\\'][^"\\\']*\\bmavie-footer-logo-box\\b[^"\\\']*["\\\'][^>]*>[\\s\\S]*?</div>', re.I)
 
-          changed = []
-          for path in Path('.').rglob('*.html'):
-              if '.git' in path.parts:
-                  continue
+          for path in Path('.').glob('*.html'):
               text = path.read_text(encoding='utf-8')
               original = text
               text = header_box.sub(header, text)
               text = footer_box.sub(footer, text)
               if text != original:
                   path.write_text(text, encoding='utf-8')
-                  changed.append(str(path))
-
-          print('Changed pages:', changed)
+                  print('Updated markup:', path)
           PY
 
-      - name: Ensure centralized logo CSS
-        run: |
-          cat >> style.css <<'EOF'
+          # Add the same logo rules to every page-specific stylesheet.
+          read -r -d '' LOGO_CSS <<'EOF' || true
 
-/* Mavie header logo */
+/* MAVIE GLOBAL LOGO STYLES */
 .mavie-logo-link {
   width: 180px;
   display: flex;
@@ -70,7 +86,6 @@ jobs:
   }
 }
 
-/* Mavie footer logo */
 .mavie-logo-footer-link {
   width: 140px;
   display: flex;
@@ -82,16 +97,30 @@ jobs:
   width: 100%;
   height: auto;
 }
+/* MAVIE GLOBAL LOGO STYLES END */
 EOF
 
+          for css in *.css; do
+            [ -f "$css" ] || continue
+            if ! grep -q 'MAVIE GLOBAL LOGO STYLES' "$css"; then
+              printf '%s\n' "$LOGO_CSS" >> "$css"
+              echo "Added logo CSS: $css"
+            else
+              echo "Logo CSS already present: $css"
+            fi
+          done
+
       - name: Commit changes
+        shell: bash
         run: |
+          set -e
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add '*.html' style.css
+          git add -- '*.html' '*.css'
+
           if git diff --cached --quiet; then
-            echo "No changes needed."
+            echo "No logo changes needed."
           else
-            git commit -m "Standardize logos across all pages"
+            git commit -m "Apply Mavie logo styles to all pages"
             git push
           fi
