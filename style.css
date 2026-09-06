@@ -180,6 +180,24 @@ height: 45px;
   cursor: pointer;
 }
 
+.mavie-logo-link{
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mavie-logo-link img{
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width:768px){
+  .mavie-logo-link{
+    width: 110px;
+  }
+}
+
 .brand-color {
   fill: white;
 }
@@ -809,6 +827,7 @@ input:focus {
 /* SEARCH BOX MEDIA QUREY */
 
 @media screen and (min-width: 1024px) and (max-width: 1279px) {
+
   .search-box-container {
     height: 102px;
     gap: 10px;
@@ -1139,7 +1158,7 @@ input:focus {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: linear-gradient(209.17deg, #E6E3E3 -0.34%, rgba(255, 255, 255, 0.463542) 48.21%, rgba(145, 145, 145, 0.29) 90.15%);  
+  background: linear-gradient(209.17deg, #E6E3E3 -0.34%, rgba(255, 255, 255, 0.463542) 48.21%, rgba(145, 145, 145, 0.29) 90.15%);
 }
 
 .gold-active{
@@ -6673,6 +6692,18 @@ height: 45px; */
 .mavie-footer-logo {
   width: 140px;
   height: 50px;
+}
+
+.mavie-logo-footer-link {
+  width: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mavie-logo-footer-link img{
+  width: 100%;
+  height: auto;
 }
 
 .mavie-footer-address {
