@@ -3,6 +3,7 @@
 
   var STORAGE_KEY = "mavieCart";
   var COLLECTION_URL = "product-collection.html";
+  var JEWELRY_SIZES = ["5", "5.5", "6", "6.5", "7", "7.5"];
 
   var seedCart = [
     {
@@ -11,7 +12,7 @@
       price: 99,
       image: "Images/rings-image-1.jpg",
       color: "Gold/Silver",
-      size: "XS",
+      size: "5.5",
       quantity: 1
     },
     {
@@ -33,7 +34,7 @@
       goldImage: "Images/rings-image-1.jpg",
       silverImage: "Images/rings-image-2.jpg",
       color: "Gold",
-      size: "XS"
+      size: "5.5"
     },
     {
       id: "bought-necklace",
@@ -42,23 +43,36 @@
       goldImage: "Images/necklace-banner-1.jpg",
       silverImage: "Images/necklace-banner-2.jpg",
       color: "Silver",
-      size: "XS"
+      size: ""
     }
   ];
+
+  function supportsSize(name) {
+    var normalizedName = String(name || "").toLowerCase();
+    return normalizedName.indexOf("ring") !== -1 || normalizedName.indexOf("bracelet") !== -1;
+  }
+
+  function normalizeCartItem(item) {
+    var normalized = Object.assign({}, item);
+    normalized.size = supportsSize(normalized.name) ? String(normalized.size || "") : "";
+    return normalized;
+  }
 
   function readCart() {
     try {
       var stored = localStorage.getItem(STORAGE_KEY);
       if (stored !== null) {
         var parsed = JSON.parse(stored);
-        return Array.isArray(parsed) ? parsed : [];
+        if (Array.isArray(parsed)) {
+          return parsed.map(normalizeCartItem);
+        }
       }
     } catch (error) {
       console.warn("Mavie cart could not be read.", error);
     }
 
     return seedCart.map(function (item) {
-      return Object.assign({}, item);
+      return normalizeCartItem(item);
     });
   }
 
@@ -151,7 +165,9 @@
   }
 
   function renderItem(item, index) {
-    var size = item.size ? '<div class="mavie-cart-meta">Size: ' + escapeHtml(item.size) + '</div>' : '';
+    var size = supportsSize(item.name) && item.size
+      ? '<div class="mavie-cart-meta">Size: ' + escapeHtml(item.size) + '</div>'
+      : '';
 
     return '' +
       '<div class="cart-drawer-item-box mavie-cart-item" data-index="' + index + '">' +
@@ -182,6 +198,16 @@
       '<div class="cart-drawer-bought-together-heading">bought together</div>' +
       boughtTogetherProducts.map(function (product) {
         var image = product.color.toLowerCase() === "silver" ? product.silverImage : product.goldImage;
+        var sizeSelector = supportsSize(product.name)
+          ? '<div class="cart-drawer-item-size-box">' +
+              '<select class="mavie-bought-size" aria-label="Size">' +
+                JEWELRY_SIZES.map(function (size) {
+                  return '<option value="' + size + '"' + (size === product.size ? ' selected' : '') + '>' + size + '</option>';
+                }).join("") +
+              '</select>' +
+            '</div>'
+          : '';
+
         return '' +
           '<div class="cart-drawer-item-box mavie-bought-item" data-bought-id="' + escapeHtml(product.id) + '">' +
             '<div class="cart-drawer-item-img-box">' +
@@ -193,13 +219,7 @@
                 '<div class="cart-drawer-item-gold ' + (product.color === "Gold" ? "gold-active" : "") + ' mavie-bought-gold" role="button" tabindex="0"><div class="item-gold"></div></div>' +
                 '<div class="cart-drawer-item-silver ' + (product.color === "Silver" ? "silver-active" : "") + ' mavie-bought-silver" role="button" tabindex="0"><div class="item-silver"></div></div>' +
               '</div>' +
-              '<div class="cart-drawer-item-size-box">' +
-                '<select class="mavie-bought-size" aria-label="Size">' +
-                  ["XS","S","M","L","XL","XXL"].map(function (size) {
-                    return '<option value="' + size + '"' + (size === product.size ? ' selected' : '') + '>' + size + '</option>';
-                  }).join("") +
-                '</select>' +
-              '</div>' +
+              sizeSelector +
             '</div>' +
             '<div class="cart-drawer-item-price">' + money(product.price) + '</div>' +
             '<button type="button" class="cart-drawer-add-cart-btn mavie-bought-add">add to cart</button>' +
@@ -249,7 +269,7 @@
   }
 
   function addToCart(item) {
-    var normalized = Object.assign({ quantity: 1 }, item);
+    var normalized = normalizeCartItem(Object.assign({ quantity: 1 }, item));
     normalized.quantity = Math.max(1, Number(normalized.quantity || 1));
 
     var existing = cart.find(function (cartItem) {
@@ -282,7 +302,9 @@
     var price = parseFloat(priceText) || 0;
     var image = imageElement ? imageElement.getAttribute("src") : "Images/mavie-missing-product.svg";
     var color = colorElement ? colorElement.textContent.trim() : "Silver";
-    var size = sizeElement ? sizeElement.textContent.replace(/[^0-9.]/g, "").trim() : "";
+    var size = supportsSize(name) && sizeElement
+      ? sizeElement.textContent.replace(/[^0-9.]/g, "").trim()
+      : "";
     var quantity = quantityElement ? parseInt(quantityElement.options[quantityElement.selectedIndex].textContent, 10) : 1;
 
     return {
@@ -424,7 +446,7 @@
         if (product) {
           var color = boughtBox.querySelector(".gold-active") ? "Gold" : "Silver";
           var sizeSelect = boughtBox.querySelector(".mavie-bought-size");
-          var size = sizeSelect ? sizeSelect.value : "XS";
+          var size = sizeSelect ? sizeSelect.value : "";
           var image = color === "Gold" ? product.goldImage : product.silverImage;
 
           addToCart({
