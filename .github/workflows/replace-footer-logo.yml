@@ -1,4 +1,4 @@
-name: Replace Footer Logo On All Pages
+name: Standardize Mavie Logo Markup And Styles
 
 on:
   push:
@@ -9,13 +9,13 @@ permissions:
   contents: write
 
 jobs:
-  replace-footer-logo:
+  standardize-logo:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Normalize footer logo on every HTML page
+      - name: Standardize header and footer logo markup on every HTML page
         shell: python
         run: |
           from pathlib import Path
@@ -23,62 +23,75 @@ jobs:
 
           changed = []
 
-          # Replace the old inline SVG logo, if any, with the PNG logo.
-          svg_pattern = re.compile(
-              r'(<div\s+class=["\']mavie-footer-logo-box["\'][\s\S]*?<a\b[^>]*>\s*)'
-              r'<svg\b(?=[^>]*\bclass=["\']mavie-footer-logo["\'])[^>]*>[\s\S]*?</svg>'
-              r'(\s*</a>)',
+          # Header logo: remove the inline sizing/layout styles from the link and image.
+          header_pattern = re.compile(
+              r'<a\b(?=[^>]*\bclass=["\']mavie-logo-link["\'])[^>]*\bhref=["\']index\.html["\'][^>]*>\s*'
+              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*'
+              r'</a>',
               re.IGNORECASE
           )
 
-          png_replacement = '''<img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image" style="
-              width: 100%;
-              height: auto;
-            ">'''
+          header_replacement = '''<a href="index.html" class="mavie-logo-link" aria-label="Mavie Jewelry home">
+            <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
+          </a>'''
 
-          # Normalize both existing PNG footer-logo links:
-          # href="#" and href="index.html" become href="index.html"
-          # and both receive class="mavie-logo-footer-link".
-          png_link_pattern = re.compile(
-              r'(<div\s+class=["\']mavie-footer-logo-box["\']\s*>\s*)'
+          # Footer logo: remove inline image sizing styles and keep the standardized footer link.
+          footer_pattern = re.compile(
+              r'<a\b(?=[^>]*\bclass=["\']mavie-logo-footer-link["\'])[^>]*\bhref=["\']index\.html["\'][^>]*>\s*'
+              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*'
+              r'</a>',
+              re.IGNORECASE
+          )
+
+          footer_replacement = '''<a href="index.html" class="mavie-logo-footer-link">
+            <img src="Images/mavie-logo.png" alt="Mavie Jewelry" class="mavie-logo-image">
+          </a>'''
+
+          # Also convert any older footer PNG link variants to the standardized footer class/href.
+          old_footer_pattern = re.compile(
               r'<a\b[^>]*>\s*'
-              r'(<img\b[^>]*\bsrc=["\']Images/mavie-logo\.png["\'][^>]*>\s*)'
-              r'(</a>)',
+              r'<img\b(?=[^>]*\bsrc=["\']Images/mavie-logo\.png["\'])[^>]*\bclass=["\']mavie-logo-image["\'][^>]*>\s*'
+              r'</a>',
               re.IGNORECASE
           )
-
-          png_link_replacement = r'\1<a href="index.html" class="mavie-logo-footer-link">\n          \2        \3'
 
           for path in Path('.').rglob('*.html'):
               if '.git' in path.parts:
                   continue
 
               text = path.read_text(encoding='utf-8')
+              original = text
 
-              new_text, svg_count = svg_pattern.subn(
-                  r'\1' + png_replacement + r'\2',
-                  text
+              text, header_count = header_pattern.subn(header_replacement, text)
+              text, footer_count = footer_pattern.subn(footer_replacement, text)
+
+              # Only normalize old footer anchors inside the footer-logo box.
+              box_pattern = re.compile(
+                  r'(<div\s+class=["\']mavie-footer-logo-box["\'][^>]*>)([\s\S]*?)(</div>)',
+                  re.IGNORECASE
               )
 
-              new_text, link_count = png_link_pattern.subn(
-                  png_link_replacement,
-                  new_text
-              )
+              def normalize_footer_box(match):
+                  box = match.group(0)
+                  normalized, count = old_footer_pattern.subn(footer_replacement, box)
+                  return normalized
 
-              if svg_count or link_count:
-                  path.write_text(new_text, encoding='utf-8')
-                  changed.append(f'{path} (svg={svg_count}, links={link_count})')
+              text, old_footer_count = box_pattern.subn(normalize_footer_box, text)
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(str(path))
 
           print('Updated:', ', '.join(changed) if changed else 'none')
 
-      - name: Commit footer logo changes
+      - name: Commit logo markup changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- '*.html'
           if git diff --cached --quiet; then
-            echo "No footer logo changes needed."
+            echo "No logo markup changes needed."
           else
-            git commit -m "Normalize footer logo link across all pages"
+            git commit -m "Standardize header and footer logo markup"
             git push
           fi
