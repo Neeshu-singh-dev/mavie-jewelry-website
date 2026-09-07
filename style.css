@@ -971,8 +971,8 @@ input:focus {
 
 
 .cart-drawer-main-box{
-  position:absolute;
-  right:0;
+  position: absolute;
+  right: 0;
   width: 430px;
   height: 100%;
   background-color: white;
