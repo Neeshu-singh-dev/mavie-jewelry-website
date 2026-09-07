@@ -1,0 +1,91 @@
+name: Apply cart drawer CSS fix
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  fix-cart-drawer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Update cart drawer CSS in all page stylesheets
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          changed = []
+
+          for path in Path('.').rglob('*.css'):
+              if '.git' in path.parts:
+                  continue
+
+              text = path.read_text(encoding='utf-8')
+              original = text
+
+              def fix_container(match):
+                  block = match.group(0)
+                  block = re.sub(r'(?m)(^\s*width\s*:\s*)100%\s*;', r'\g<1>100vw;', block, count=1)
+                  block = re.sub(r'(?m)(^\s*height\s*:\s*)100%\s*;', r'\g<1>100vh;', block, count=1)
+                  return block
+
+              text = re.sub(
+                  r'\.cart-drawer-main-container\s*\{[^{}]*\}',
+                  fix_container,
+                  text,
+                  flags=re.S,
+              )
+
+              def fix_box(match):
+                  block = match.group(0)
+                  if not re.search(r'(?m)^\s*position\s*:', block):
+                      block = block.replace('{', '{\n  position: absolute;', 1)
+                  else:
+                      block = re.sub(r'(?m)^\s*position\s*:[^;]+;', '  position: absolute;', block, count=1)
+                  if not re.search(r'(?m)^\s*right\s*:', block):
+                      block = block.replace('{', '{\n  right: 0;', 1)
+                  else:
+                      block = re.sub(r'(?m)^\s*right\s*:[^;]+;', '  right: 0;', block, count=1)
+                  return block
+
+              text = re.sub(
+                  r'\.cart-drawer-main-box\s*\{[^{}]*\}',
+                  fix_box,
+                  text,
+                  flags=re.S,
+              )
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(str(path))
+
+          print('Changed CSS files:')
+          for item in changed:
+              print(item)
+
+          if not changed:
+              print('No CSS changes were necessary.')
+
+      - name: Commit changes and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.css' .github/workflows/apply-cart-drawer-fix.yml
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "Fix cart drawer sizing across pages"
+          git rm .github/workflows/apply-cart-drawer-fix.yml
+          git commit -m "Remove temporary cart drawer workflow"
+          git push
