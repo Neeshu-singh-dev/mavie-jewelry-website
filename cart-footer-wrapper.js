@@ -16,15 +16,18 @@
         background: #fff;
       }
 
-      .cart-drawer-sub-total-box {
+      .cart-drawer-footer .cart-drawer-sub-total-box {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
+        padding: 0;
+        border-top: none;
         background-color: white;
       }
 
-      .cart-drawer-total-price-note {
+      .cart-drawer-footer .cart-drawer-total-price-note {
+        padding: 0;
         font-size: 14px;
         font-family: "futura", "Jost", sans-serif;
         color: rgba(0, 0, 0, 0.5);
@@ -32,10 +35,11 @@
         margin-bottom: 10px;
       }
 
-      .cart-drawer-checkout-btn-box {
+      .cart-drawer-footer .cart-drawer-checkout-btn-box {
         display: flex;
         justify-content: center;
         align-items: center;
+        padding-bottom: 0;
         background-color: white;
       }
     `;
