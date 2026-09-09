@@ -7,6 +7,12 @@
     var style = document.createElement("style");
     style.id = "cart-drawer-footer-styles";
     style.textContent = `
+      .cart-drawer-heading-box {
+        position: sticky;
+        top: 0;
+        background: #fff;
+      }
+
       .cart-drawer-footer {
         padding: 20px 20px 40px;
         display: block;
