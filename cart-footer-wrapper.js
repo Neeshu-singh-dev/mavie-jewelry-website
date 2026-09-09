@@ -13,6 +13,10 @@
         background: #fff;
       }
 
+      .cart-drawer-bought-together-container {
+        width: 100%;
+      }
+
       .cart-drawer-footer {
         padding: 20px 20px 40px;
         display: block;
@@ -53,8 +57,35 @@
     document.head.appendChild(style);
   }
 
+  function wrapBoughtTogether() {
+    var drawer = document.querySelector(".cart-drawer-main-box");
+    if (!drawer) return;
+
+    var heading = drawer.querySelector(".cart-drawer-bought-together-heading");
+    if (!heading) return;
+
+    if (heading.closest(".cart-drawer-bought-together-container")) return;
+
+    var firstItem = heading.nextElementSibling;
+    if (!firstItem || !firstItem.classList.contains("mavie-bought-item")) return;
+
+    var container = document.createElement("div");
+    container.className = "cart-drawer-bought-together-container";
+
+    heading.parentNode.insertBefore(container, heading);
+    container.appendChild(heading);
+
+    var current = firstItem;
+    while (current && current.classList.contains("mavie-bought-item")) {
+      var next = current.nextElementSibling;
+      container.appendChild(current);
+      current = next;
+    }
+  }
+
   function wrapCartFooter() {
     addCartFooterStyles();
+    wrapBoughtTogether();
 
     var drawer = document.querySelector(".cart-drawer-main-box");
     if (!drawer) return;
