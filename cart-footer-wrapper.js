@@ -15,6 +15,7 @@
 
       .cart-drawer-bought-together-container {
         width: 100%;
+        padding-bottom: 20px;
       }
 
       .cart-drawer-footer {
